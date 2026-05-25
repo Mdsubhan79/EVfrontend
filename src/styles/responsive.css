@@ -904,3 +904,52 @@
     -webkit-overflow-scrolling: touch;
   }
 }
+
+@media (max-width: 240px) {
+
+  body {
+    overflow-x: hidden;
+  }
+
+  h1 {
+    font-size: 18px !important;
+  }
+
+  h2 {
+    font-size: 16px !important;
+  }
+
+  p,
+  span,
+  input,
+  textarea,
+  button {
+    font-size: 12px !important;
+  }
+
+  .grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .flex {
+    flex-direction: column !important;
+  }
+
+  input,
+  textarea,
+  button,
+  select {
+    width: 100% !important;
+  }
+
+  .print-container {
+    width: 100% !important;
+    padding: 10px !important;
+  }
+
+  img {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+}
