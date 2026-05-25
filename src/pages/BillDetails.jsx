@@ -23,13 +23,13 @@ export default function BillDetails() {
       const token = localStorage.getItem('token');
 
 const [billRes, businessRes] = await Promise.all([
-  axios.get(`http://localhost:5000/api/bills/${id}`, {
+  axios.get(`https://evbackend-3jlc.onrender.com/api/bills/${id}`, {
     headers: {
       Authorization: `Bearer ${token}`
     }
   }),
 
-  axios.get(`http://localhost:5000/api/business/details`, {
+  axios.get(`https://evbackend-3jlc.onrender.com/api/business/details`, {
     headers: {
       Authorization: `Bearer ${token}`
     }

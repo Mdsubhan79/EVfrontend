@@ -33,7 +33,7 @@ useEffect(() => {
       const token = localStorage.getItem('token');
 
       const response = await axios.get(
-        'http://localhost:5000/api/business/details',
+        'https://evbackend-3jlc.onrender.com/api/business/details',
         {
           headers: {
             Authorization: `Bearer ${token}`
@@ -120,7 +120,7 @@ const handleCreateBill = async (e) => {
     console.log(billData);
 
     const response = await axios.post(
-      'http://localhost:5000/api/bills/create',
+      'https://evbackend-3jlc.onrender.com/api/bills/create',
       billData,
       {
         headers: {
