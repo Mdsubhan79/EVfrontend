@@ -12,7 +12,7 @@ export default function EditBill() {
   const [customerDetails, setCustomerDetails] = useState({
     name: '',
     phoneNumber: '',
-    address: '',
+    address: '', 
     aadharNumber: '',
   });
   
@@ -20,7 +20,7 @@ export default function EditBill() {
   const [paymentMode, setPaymentMode] = useState('cash');
   const [specialInstructions, setSpecialInstructions] = useState({
     motorWarranty: '12 months',
-    batteryWarranty: '12 months',
+    batteryWarranty: '12 months', 
     otherComments: '',
   });
   
