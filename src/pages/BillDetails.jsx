@@ -133,13 +133,7 @@ const [billRes, businessRes] = await Promise.all([
             <ChatBubbleLeftRightIcon className="h-5 w-5 mr-2" />
             WhatsApp
           </button>
-          <button
-            onClick={handleSendSMS}
-            className="flex items-center px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
-          >
-            <EnvelopeIcon className="h-5 w-5 mr-2" />
-            SMS
-          </button>
+          
           <button
             onClick={downloadPDF}
             className="flex items-center px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700"
