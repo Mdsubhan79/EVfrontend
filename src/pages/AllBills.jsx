@@ -102,10 +102,9 @@ export default function AllBills() {
                       </td>
                       <td
                           data-label="Action"
-                          className="px-6 py-4 whitespace-nowrap text-center"
+                          className="px-6 py-4"
                         >
-                        <div className="flex items-center justify-center gap-3">
-
+                        <div className="flex items-center justify-end gap-4 flex-wrap">
                             {/* View Button */}
                             <button
                               onClick={() => navigate(`/bill/${bill._id}`)}
@@ -122,15 +121,17 @@ export default function AllBills() {
 
                             {/* Delete Button */}
                             <button
-                              onClick={() => handleDeleteBill(bill._id)}
                               className="
-                                flex items-center gap-1
+                                flex
+                                items-center
+                                gap-1
                                 text-red-600
-                                hover:text-red-800
-                                transition
+                                whitespace-nowrap
+                                text-sm
+                                font-medium
                               "
                             >
-                              <TrashIcon className="h-6 w-6" />
+                              <TrashIcon className="h-5 w-5" />
                               <span>Delete</span>
                             </button>
 
