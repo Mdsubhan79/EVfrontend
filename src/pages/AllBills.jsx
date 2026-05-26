@@ -35,8 +35,8 @@ export default function AllBills() {
   
   return (
     <div className="min-h-screen bg-gray-100 py-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-6xl mx-auto">
-        <div className="bg-white rounded-lg shadow-xl overflow-hidden">
+      <div className="w-full max-w-7xl mx-auto">
+        <div className="bg-white rounded-lg shadow-xl overflow-hidden w-full">
           <div className="px-6 py-4 border-b border-gray-200">
             <h2 className="text-2xl font-bold text-gray-800">All Bills</h2>
           </div>
@@ -53,7 +53,7 @@ export default function AllBills() {
             </div>
           ) : (
             <div className="overflow-x-auto">
-              <table className="w-full">
+               <table className="w-full bills-table">
                 <thead className="bg-gray-50">
                   <tr>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -75,20 +75,35 @@ export default function AllBills() {
                 </thead>
                 <tbody className="divide-y divide-gray-200">
                   {bills.map((bill) => (
-                    <tr key={bill._id} className="hover:bg-gray-50">
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    <tr key={bill._id} className="hover:bg-gray-50 bill-row">
+                      <td
+                          data-label="Invoice No"
+                          className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                        >
                         {bill.invoiceNumber}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                      <td
+                          data-label="Customer Name"
+                          className="px-6 py-4 whitespace-nowrap text-sm text-gray-600"
+                        >
                         {bill.customerDetails.name}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                      <td
+                          data-label="Date"
+                          className="px-6 py-4 whitespace-nowrap text-sm text-gray-600"
+                        >
                         {new Date(bill.createdAt).toLocaleDateString()}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-right font-semibold">
+                      <td
+                          data-label="Total Amount"
+                          className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-right font-semibold"
+                        >
                         ₹{bill.grandTotal.toLocaleString()}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-center">
+                      <td
+                          data-label="Action"
+                          className="px-6 py-4 whitespace-nowrap text-center"
+                        >
                         <button
                           onClick={() => navigate(`/bill/${bill._id}`)}
                           className="text-green-600 hover:text-green-800"

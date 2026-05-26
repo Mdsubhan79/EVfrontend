@@ -44,29 +44,72 @@ const [billRes, businessRes] = await Promise.all([
       setLoading(false);
     }
   };
-  
-    const downloadPDF = async () => {
-      const input = document.getElementById('bill-preview');
 
-      const canvas = await html2canvas(input, {
-          scale: 2,
-          useCORS: true,
-          allowTaint: true,
-        });
 
-      const imgData = canvas.toDataURL('image/png');
+  const downloadPDF = async () => {
 
-      const pdf = new jsPDF('p', 'mm', 'a4');
+  const input = document.getElementById('bill-preview');
 
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight =
-        (canvas.height * pdfWidth) / canvas.width;
+  const canvas = await html2canvas(input, {
+    scale: window.devicePixelRatio > 1 ? 2 : 3,
+    useCORS: true,
+    backgroundColor: "#ffffff",
+    scrollY: -window.scrollY,
+  });
 
-      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+  const imgData = canvas.toDataURL('image/jpeg', 1.0);
 
-      pdf.save('invoice.pdf');
-    };
-  
+  const pdf = new jsPDF({
+    orientation: 'portrait',
+    unit: 'mm',
+    format: 'a4',
+    compress: true
+  });
+
+  const pageWidth = 210;
+  const pageHeight = 297;
+
+  const imgWidth = pageWidth;
+
+  const imgHeight =
+    (canvas.height * imgWidth) / canvas.width;
+
+  let heightLeft = imgHeight;
+  let position = 0;
+
+  pdf.addImage(
+    imgData,
+    'JPEG',
+    0,
+    position,
+    imgWidth,
+    imgHeight
+  );
+
+  heightLeft -= pageHeight;
+
+  while (heightLeft > 0) {
+
+    position = heightLeft - imgHeight;
+
+    pdf.addPage();
+
+    pdf.addImage(
+      imgData,
+      'JPEG',
+      0,
+      position,
+      imgWidth,
+      imgHeight
+    );
+
+    heightLeft -= pageHeight;
+  }
+
+  pdf.save(`Invoice-${bill.invoiceNumber}.pdf`);
+};  
+
+
     const handleSendWhatsApp = async () => {
 
       const phoneNumber = prompt(
@@ -152,18 +195,27 @@ const [billRes, businessRes] = await Promise.all([
         {/* Invoice */}
           <div
             id="bill-preview"
-            className="print-container bg-white rounded-lg shadow-xl overflow-hidden"
+           className="
+            print-container
+            bg-white
+            w-full
+            max-w-[794px]
+            mx-auto
+            overflow-hidden
+            text-[12px]
+            sm:text-[14px]
+            "
           >
           {/* Header */}
           <div className="border-b border-gray-200 p-6">
-            <div className="flex justify-between items-start">
+            <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
               <div>
                 {business?.logo && (
                     <img
                       src={business.logo}
                       alt="Logo"
                       crossOrigin="anonymous"
-                      className="h-20 mb-4 object-contain"
+                     className="w-16 h-16 sm:w-20 sm:h-20 mb-4 object-contain"
                     />
                   )}
                 <h1 className="text-2xl font-bold text-gray-800">{business?.businessName}</h1>
@@ -178,7 +230,7 @@ const [billRes, businessRes] = await Promise.all([
           
           {/* Business & Customer Info */}
           <div className="p-6 border-b border-gray-200">
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
                 <h3 className="font-semibold text-gray-700 mb-2">Business Details:</h3>
                 <p className="text-sm text-gray-600">{business?.address}</p>
@@ -197,8 +249,8 @@ const [billRes, businessRes] = await Promise.all([
           </div>
           
           {/* Products Table */}
-          <div className="p-6">
-            <table className="w-full">
+          <div className="p-3 sm:p-6 overflow-x-auto">
+           <table className="w-full min-w-[700px] text-[11px] sm:text-sm">
               <thead>
                 <tr className="border-b border-gray-200">
                   <th className="text-left py-2">Item</th>
@@ -247,7 +299,7 @@ const [billRes, businessRes] = await Promise.all([
 
                 <div className="flex justify-end">
 
-                  <div className="w-72 space-y-3">
+                  <div className="w-full sm:w-72 space-y-3">
 
                     <div className="flex justify-between text-lg">
                       <span>Subtotal:</span>
@@ -294,7 +346,7 @@ const [billRes, businessRes] = await Promise.all([
               If you have any questions about this invoice, please contact us at {business?.phone}
             </p>
             <p className="text-center mt-2">Thank you!</p>
-            <div className="flex justify-end mt-16">
+             <div className="flex justify-end mt-10 sm:mt-16">
 
                 <div className="text-center">
 

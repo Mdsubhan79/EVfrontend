@@ -1029,3 +1029,105 @@
   }
 
 }
+
+/* =========================================
+   ALL BILLS RESPONSIVE DESIGN
+========================================= */
+
+.bills-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* 240px → 480px */
+@media (max-width: 480px) {
+
+  .bills-table thead {
+    display: none;
+  }
+
+  .bill-row {
+    display: block;
+    margin-bottom: 16px;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    background: white;
+    padding: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  }
+
+  .bills-table tbody td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 10px 6px;
+    text-align: right !important;
+    border-bottom: 1px solid #f1f1f1;
+    white-space: normal !important;
+    word-break: break-word;
+    font-size: 12px;
+  }
+
+  .bills-table tbody td:last-child {
+    border-bottom: none;
+  }
+
+  .bills-table tbody td::before {
+    content: attr(data-label);
+    font-weight: 700;
+    color: #374151;
+    text-align: left;
+    flex: 1;
+  }
+
+  .bills-table button {
+    width: 100%;
+    justify-content: center;
+    padding: 8px;
+    border-radius: 8px;
+  }
+
+}
+
+/* 481px → 768px */
+@media (min-width: 481px) and (max-width: 768px) {
+
+  .bills-table thead th {
+    font-size: 12px;
+    padding: 10px;
+  }
+
+  .bills-table tbody td {
+    font-size: 13px;
+    padding: 12px 10px;
+  }
+
+}
+
+/* 769px → 1024px */
+@media (min-width: 769px) and (max-width: 1024px) {
+
+  .bills-table thead th {
+    font-size: 13px;
+  }
+
+  .bills-table tbody td {
+    font-size: 14px;
+  }
+
+}
+
+/* Large Desktop */
+@media (min-width: 1400px) {
+
+  .bills-table thead th {
+    font-size: 15px;
+  }
+
+  .bills-table tbody td {
+    font-size: 15px;
+  }
+
+}

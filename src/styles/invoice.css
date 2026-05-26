@@ -153,8 +153,9 @@
 }
 
 .print-container {
-  width: 210mm;
-  min-height: 297mm;
+  width: 100%;
+  max-width: 794px;
+  margin: auto;
   background: white;
 }
 
@@ -172,6 +173,35 @@
     width: 100%;
     margin: 0;
     box-shadow: none;
+  }
+
+}
+
+#bill-preview {
+  overflow: hidden;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+td,
+th {
+  word-break: break-word;
+}
+
+img {
+  max-width: 100%;
+}
+
+@media (max-width: 640px) {
+
+  #bill-preview {
+    font-size: 11px;
+  }
+
+  .invoice-header {
+    flex-direction: column;
   }
 
 }
