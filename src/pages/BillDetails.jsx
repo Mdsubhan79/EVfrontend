@@ -44,56 +44,38 @@ const [billRes, businessRes] = await Promise.all([
       setLoading(false);
     }
   };
-
 const downloadPDF = async () => {
 
   try {
 
     const input = document.getElementById('bill-preview');
 
-    if (!input) {
-      toast.error('Invoice not found');
-      return;
-    }
-
-    // High quality canvas
     const canvas = await html2canvas(input, {
-      scale: window.devicePixelRatio * 2,
+      scale: 4,
       useCORS: true,
-      logging: false,
       backgroundColor: "#ffffff",
-      scrollY: -window.scrollY,
-      windowWidth: 1200,
       letterRendering: true,
+      scrollY: -window.scrollY
     });
 
-    // PNG gives sharper text
     const imgData = canvas.toDataURL('image/png');
 
     const pdf = new jsPDF({
       orientation: 'portrait',
       unit: 'mm',
-      format: 'a4',
-      compress: true
+      format: 'a4'
     });
-
-    const pdfWidth = 210;
-    const pdfHeight = 297;
 
     pdf.addImage(
       imgData,
       'PNG',
       0,
       0,
-      pdfWidth,
-      pdfHeight,
-      undefined,
-      'FAST'
+      210,
+      297
     );
 
     pdf.save(`Invoice-${bill.invoiceNumber}.pdf`);
-
-    toast.success('PDF Downloaded');
 
   } catch (error) {
 

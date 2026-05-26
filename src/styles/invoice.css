@@ -104,7 +104,7 @@ body {
   }
 
   .print-container {
-    width: 100%;
+   
     min-height: auto;
     padding: 12px;
     box-shadow: none;
@@ -373,7 +373,7 @@ body {
 
   .print-container {
 
-    width: 100% !important;
+   
 
     max-width: 100% !important;
 
