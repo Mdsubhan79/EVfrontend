@@ -68,7 +68,7 @@ export default function AllBills() {
                     <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Total Amount
                     </th>
-                    <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-5 py-3 text-center text-xs font-small text-gray-500 uppercase tracking-wider">
                       Action
                     </th>
                   </tr>
