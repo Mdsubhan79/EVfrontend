@@ -130,7 +130,7 @@ export default function AllBills() {
                                 transition
                               "
                             >
-                              <TrashIcon className="h-5 w-5" />
+                              <TrashIcon className="h-6 w-5" />
                               <span>Delete</span>
                             </button>
 
