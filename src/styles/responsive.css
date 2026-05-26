@@ -1131,3 +1131,72 @@
   }
 
 }
+
+/* =========================================
+   SIMPLE SMARTPHONE FIX
+========================================= */
+
+@media screen and (max-width: 480px) {
+
+  /* Main Page Padding */
+  .min-h-screen {
+    padding: 10px !important;
+  }
+
+  /* Action Buttons */
+  .bill-actions {
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
+
+  .bill-actions button {
+    width: 100% !important;
+    justify-content: center !important;
+    font-size: 13px !important;
+    padding: 10px !important;
+  }
+
+  /* Invoice Container */
+  #bill-preview {
+    padding: 12px !important;
+    border-radius: 10px !important;
+  }
+
+  /* Header */
+  #bill-preview h1 {
+    font-size: 20px !important;
+    text-align: center;
+  }
+
+  #bill-preview p {
+    font-size: 12px !important;
+  }
+
+  /* Logo */
+  #bill-preview img {
+    margin: auto;
+    display: block;
+  }
+
+  /* Table */
+  #bill-preview table {
+    min-width: 600px;
+  }
+
+  #bill-preview th,
+  #bill-preview td {
+    font-size: 11px !important;
+    padding: 6px !important;
+  }
+
+  /* Totals Section */
+  #bill-preview .text-2xl {
+    font-size: 18px !important;
+  }
+
+  /* Signature */
+  #bill-preview .w-48 {
+    width: 100% !important;
+  }
+
+}
