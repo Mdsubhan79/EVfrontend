@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import { EyeIcon } from '@heroicons/react/24/outline';
+import {EyeIcon,TrashIcon} from '@heroicons/react/24/outline';
 
 export default function AllBills() {
   const navigate = useNavigate();
@@ -104,13 +104,37 @@ export default function AllBills() {
                           data-label="Action"
                           className="px-6 py-4 whitespace-nowrap text-center"
                         >
-                        <button
-                          onClick={() => navigate(`/bill/${bill._id}`)}
-                          className="text-green-600 hover:text-green-800"
-                        >
-                          <EyeIcon className="h-5 w-5 inline" />
-                          View
-                        </button>
+                        <div className="flex items-center justify-center gap-3">
+
+                            {/* View Button */}
+                            <button
+                              onClick={() => navigate(`/bill/${bill._id}`)}
+                              className="
+                                flex items-center gap-1
+                                text-green-600
+                                hover:text-green-800
+                                transition
+                              "
+                            >
+                              <EyeIcon className="h-5 w-5" />
+                              <span>View</span>
+                            </button>
+
+                            {/* Delete Button */}
+                            <button
+                              onClick={() => handleDeleteBill(bill._id)}
+                              className="
+                                flex items-center gap-1
+                                text-red-600
+                                hover:text-red-800
+                                transition
+                              "
+                            >
+                              <TrashIcon className="h-5 w-5" />
+                              <span>Delete</span>
+                            </button>
+
+                          </div>
                       </td>
                     </tr>
                   ))}
@@ -122,4 +146,39 @@ export default function AllBills() {
       </div>
     </div>
   );
+
+  const handleDeleteBill = async (billId) => {
+
+  const confirmDelete = window.confirm(
+    "Are you sure you want to permanently delete this bill?"
+  );
+
+  if (!confirmDelete) return;
+
+  try {
+
+    const token = localStorage.getItem('token');
+
+    await axios.delete(
+      `https://evbackend-3jlc.onrender.com/api/bills/${billId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
+
+    toast.success('Bill deleted successfully');
+
+    setBills(
+      bills.filter((bill) => bill._id !== billId)
+    );
+
+  } catch (error) {
+
+    toast.error('Failed to delete bill');
+
+  }
+
+};
 }
