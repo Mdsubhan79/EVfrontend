@@ -56,36 +56,39 @@ const downloadPDF = async () => {
       return;
     }
 
+    // High quality canvas
     const canvas = await html2canvas(input, {
-      scale: 1,
+      scale: window.devicePixelRatio * 2,
       useCORS: true,
+      logging: false,
       backgroundColor: "#ffffff",
-      scrollY: -window.scrollY
+      scrollY: -window.scrollY,
+      windowWidth: 1200,
+      letterRendering: true,
     });
 
-    const imgData = canvas.toDataURL('image/jpeg', 1.0);
+    // PNG gives sharper text
+    const imgData = canvas.toDataURL('image/png');
 
     const pdf = new jsPDF({
       orientation: 'portrait',
       unit: 'mm',
-      format: 'a4'
+      format: 'a4',
+      compress: true
     });
 
     const pdfWidth = 210;
-
-    const pdfHeight =
-      (canvas.height * pdfWidth) / canvas.width;
-
-    const finalHeight =
-      pdfHeight > 297 ? 297 : pdfHeight;
+    const pdfHeight = 297;
 
     pdf.addImage(
       imgData,
-      'JPEG',
+      'PNG',
       0,
       0,
       pdfWidth,
-      finalHeight
+      pdfHeight,
+      undefined,
+      'FAST'
     );
 
     pdf.save(`Invoice-${bill.invoiceNumber}.pdf`);
@@ -210,7 +213,7 @@ const downloadPDF = async () => {
                      className="w-16 h-16 sm:w-20 sm:h-20 mb-4 object-contain"
                     />
                   )}
-                <h1 className="text-2xl font-bold text-gray-800">{business?.businessName}</h1>
+                <h1 className="text-[30px] font-bold text-black">{business?.businessName}</h1>
                 <p className="text-gray-600">{business?.tagline}</p>
               </div>
               <div className="text-right">
@@ -242,7 +245,7 @@ const downloadPDF = async () => {
           
           {/* Products Table */}
           <div className="p-3 sm:p-6 overflow-x-auto">
-          <table className="w-full text-[11px] sm:text-sm">
+          <table className="w-full text-[13px] sm:text-sm">
               <thead>
                 <tr className="border-b border-gray-200">
                   <th className="text-left py-2">Item</th>
