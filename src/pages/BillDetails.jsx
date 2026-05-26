@@ -45,70 +45,38 @@ const [billRes, businessRes] = await Promise.all([
     }
   };
 
-
   const downloadPDF = async () => {
 
   const input = document.getElementById('bill-preview');
 
   const canvas = await html2canvas(input, {
-    scale: window.devicePixelRatio > 1 ? 2 : 3,
+    scale: 1,
     useCORS: true,
     backgroundColor: "#ffffff",
-    scrollY: -window.scrollY,
+    scrollY: -window.scrollY
   });
 
   const imgData = canvas.toDataURL('image/jpeg', 1.0);
 
-  const pdf = new jsPDF({
-    orientation: 'portrait',
-    unit: 'mm',
-    format: 'a4',
-    compress: true
-  });
+  const pdf = new jsPDF('p', 'mm', 'a4');
 
-  const pageWidth = 210;
-  const pageHeight = 297;
+  const pdfWidth = 210;
 
-  const imgWidth = pageWidth;
-
-  const imgHeight =
-    (canvas.height * imgWidth) / canvas.width;
-
-  let heightLeft = imgHeight;
-  let position = 0;
+  const finalHeight =
+pdfHeight > 297 ? 297 : pdfHeight;
 
   pdf.addImage(
     imgData,
     'JPEG',
     0,
-    position,
-    imgWidth,
-    imgHeight
+    0,
+    pdfWidth,
+    finalHeight
   );
 
-  heightLeft -= pageHeight;
-
-  while (heightLeft > 0) {
-
-    position = heightLeft - imgHeight;
-
-    pdf.addPage();
-
-    pdf.addImage(
-      imgData,
-      'JPEG',
-      0,
-      position,
-      imgWidth,
-      imgHeight
-    );
-
-    heightLeft -= pageHeight;
-  }
-
   pdf.save(`Invoice-${bill.invoiceNumber}.pdf`);
-};  
 
+};
 
     const handleSendWhatsApp = async () => {
 
@@ -250,7 +218,7 @@ const [billRes, businessRes] = await Promise.all([
           
           {/* Products Table */}
           <div className="p-3 sm:p-6 overflow-x-auto">
-           <table className="w-full min-w-[700px] text-[11px] sm:text-sm">
+          <table className="w-full text-[11px] sm:text-sm">
               <thead>
                 <tr className="border-b border-gray-200">
                   <th className="text-left py-2">Item</th>
@@ -333,7 +301,7 @@ const [billRes, businessRes] = await Promise.all([
           {/* Warranty & Footer */}
           <div className="p-6 text-sm text-gray-600 border-t border-gray-200">
             
-            <div className="mt-4 whitespace-pre-line text-sm leading-7">
+            <div className="mt-4 whitespace-pre-line text-xs leading-5">
 
               <h3 className="font-semibold mb-2">
                 Warranty Details:
@@ -346,11 +314,11 @@ const [billRes, businessRes] = await Promise.all([
               If you have any questions about this invoice, please contact us at {business?.phone}
             </p>
             <p className="text-center mt-2">Thank you!</p>
-             <div className="flex justify-end mt-10 sm:mt-16">
+             <div className="flex justify-end mt-6">
 
                 <div className="text-center">
 
-                  <div className="h-12"></div>
+                  <div className="h-6"></div>
 
                   <p className="font-semibold border-t pt-2 w-48">
                     Authorized Signatory

@@ -19,14 +19,13 @@ body {
 ========================================================= */
 
 .print-container {
-  width: 210mm;
-  min-height: 297mm;
+  width: 794px;
+  min-height: 1123px;
   background: white;
   margin: auto;
-  padding: 10mm;
+  padding: 20px;
   box-sizing: border-box;
   overflow: hidden;
-  position: relative;
 }
 
 /* =========================================================
@@ -344,4 +343,57 @@ body {
 
 .checkmark-animation {
   animation: checkmark 0.5s ease-out;
+}
+
+.print-container {
+  width: 794px;
+  max-width: 794px;
+  min-height: auto;
+  background: white;
+  margin: auto;
+  overflow: hidden;
+}
+
+#bill-preview {
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+@media (max-width: 768px) {
+
+  .print-container {
+
+    width: 100% !important;
+
+    max-width: 100% !important;
+
+    padding: 10px !important;
+
+    overflow-x: hidden !important;
+
+  }
+
+  #bill-preview {
+
+    zoom: 0.92;
+
+  }
+
+  #bill-preview table {
+
+    width: 100% !important;
+
+    font-size: 10px !important;
+
+  }
+
+  #bill-preview td,
+  #bill-preview th {
+
+    padding: 4px !important;
+
+    word-break: break-word;
+
+  }
+
 }

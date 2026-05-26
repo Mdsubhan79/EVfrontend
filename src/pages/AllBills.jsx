@@ -14,17 +14,96 @@ export default function AllBills() {
     fetchBills();
   }, []);
   
-  const fetchBills = async () => {
-    try {
-      const response = await axios.get('/bills/all');
-      setBills(response.data);
-    } catch (error) {
-      toast.error('Failed to load bills');
-    } finally {
-      setLoading(false);
+const fetchBills = async () => {
+
+  try {
+
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      navigate('/login');
+      return;
     }
-  };
-  
+
+    const response = await axios.get(
+      'https://evbackend-3jlc.onrender.com/api/bills/all',
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
+
+    setBills(response.data);
+
+  } catch (error) {
+
+    console.log(error);
+
+    if (
+      error.response?.status === 401
+    ) {
+
+      localStorage.removeItem('token');
+
+      navigate('/login');
+
+    } else {
+
+      setTimeout(() => {
+  fetchBills();
+}, 3000);
+
+toast.error('Fetching bills...');
+
+    }
+
+  } finally {
+
+    setLoading(false);
+
+  }
+
+};
+  const handleDeleteBill = async (billId) => {
+
+  const confirmDelete = window.confirm(
+    "Are you sure you want to permanently delete this bill?"
+  );
+
+  if (!confirmDelete) return;
+
+  try {
+
+    const token = localStorage.getItem('token');
+
+    await axios.delete(
+  `https://evbackend-3jlc.onrender.com/api/bills/${billId}`,
+  {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+);
+
+    toast.success('Bill deleted successfully');
+
+    setBills(
+      bills.filter((bill) => bill._id !== billId)
+    );
+
+  } catch (error) {
+
+    console.log(error.response?.data || error);
+
+toast.error(
+  error.response?.data?.message ||
+  'Failed to delete bill'
+);
+
+  }
+
+};
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -121,6 +200,7 @@ export default function AllBills() {
 
                             {/* Delete Button */}
                             <button
+                               onClick={() => handleDeleteBill(bill._id)}
                               className="
                                 flex
                                 items-center
@@ -148,38 +228,4 @@ export default function AllBills() {
     </div>
   );
 
-  const handleDeleteBill = async (billId) => {
-
-  const confirmDelete = window.confirm(
-    "Are you sure you want to permanently delete this bill?"
-  );
-
-  if (!confirmDelete) return;
-
-  try {
-
-    const token = localStorage.getItem('token');
-
-    await axios.delete(
-      `https://evbackend-3jlc.onrender.com/api/bills/${billId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      }
-    );
-
-    toast.success('Bill deleted successfully');
-
-    setBills(
-      bills.filter((bill) => bill._id !== billId)
-    );
-
-  } catch (error) {
-
-    toast.error('Failed to delete bill');
-
-  }
-
-};
 }
