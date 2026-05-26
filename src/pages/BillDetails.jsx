@@ -45,36 +45,60 @@ const [billRes, businessRes] = await Promise.all([
     }
   };
 
-  const downloadPDF = async () => {
+const downloadPDF = async () => {
 
-  const input = document.getElementById('bill-preview');
+  try {
 
-  const canvas = await html2canvas(input, {
-    scale: 1,
-    useCORS: true,
-    backgroundColor: "#ffffff",
-    scrollY: -window.scrollY
-  });
+    const input = document.getElementById('bill-preview');
 
-  const imgData = canvas.toDataURL('image/jpeg', 1.0);
+    if (!input) {
+      toast.error('Invoice not found');
+      return;
+    }
 
-  const pdf = new jsPDF('p', 'mm', 'a4');
+    const canvas = await html2canvas(input, {
+      scale: 1,
+      useCORS: true,
+      backgroundColor: "#ffffff",
+      scrollY: -window.scrollY
+    });
 
-  const pdfWidth = 210;
+    const imgData = canvas.toDataURL('image/jpeg', 1.0);
 
-  const finalHeight =
-pdfHeight > 297 ? 297 : pdfHeight;
+    const pdf = new jsPDF({
+      orientation: 'portrait',
+      unit: 'mm',
+      format: 'a4'
+    });
 
-  pdf.addImage(
-    imgData,
-    'JPEG',
-    0,
-    0,
-    pdfWidth,
-    finalHeight
-  );
+    const pdfWidth = 210;
 
-  pdf.save(`Invoice-${bill.invoiceNumber}.pdf`);
+    const pdfHeight =
+      (canvas.height * pdfWidth) / canvas.width;
+
+    const finalHeight =
+      pdfHeight > 297 ? 297 : pdfHeight;
+
+    pdf.addImage(
+      imgData,
+      'JPEG',
+      0,
+      0,
+      pdfWidth,
+      finalHeight
+    );
+
+    pdf.save(`Invoice-${bill.invoiceNumber}.pdf`);
+
+    toast.success('PDF Downloaded');
+
+  } catch (error) {
+
+    console.log(error);
+
+    toast.error('Failed to download PDF');
+
+  }
 
 };
 
