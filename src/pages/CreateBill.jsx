@@ -118,6 +118,7 @@ const handleCreateBill = async (e) => {
     };
 
     console.log(billData);
+    
 
     const response = await axios.post(
       'https://evbackend-3jlc.onrender.com/api/bills/create',
