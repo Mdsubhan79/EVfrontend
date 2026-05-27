@@ -235,6 +235,7 @@ const downloadPDF = async () => {
                 <h3 className="font-semibold text-gray-700 mb-2">Customer Details:</h3>
                 <p className="text-sm text-gray-600">Name: {bill.customerDetails.name}</p>
                 <p className="text-sm text-gray-600">Phone: {bill.customerDetails.phoneNumber}</p>
+                <p className="text-sm text-gray-600">Aadhar Number: {bill.customerDetails.aadharNumber}</p>
                 {bill.customerDetails.address && (
                   <p className="text-sm text-gray-600">Address: {bill.customerDetails.address}</p>
                 )}
