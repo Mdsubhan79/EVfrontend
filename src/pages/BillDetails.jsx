@@ -90,7 +90,7 @@ const downloadPDF = async () => {
       'FAST'
     );
 
-    pdf.save(`Invoice-${bill.invoiceNumber}.pdf`);
+    pdf.save(`${bill.customerDetails.name}-${bill.invoiceNumber}.pdf`);
 
     toast.success('PDF Downloaded');
 
