@@ -295,15 +295,6 @@ const downloadPDF = async () => {
         <span className="spec-value">{product.wheelSize}</span>
       </div>
 
-      <div className="spec-item">
-        <span className="spec-label">Chassis No</span>
-        <span className="spec-value">{product.chassisNumber}</span>
-      </div>
-
-      <div className="spec-item">
-        <span className="spec-label">Motor No</span>
-        <span className="spec-value">{product.motorNumber}</span>
-      </div>
 
     </div>
   ))}
@@ -395,15 +386,16 @@ const downloadPDF = async () => {
           {/* Warranty & Footer */}
           <div className="p-6 text-sm text-gray-600 border-t border-gray-200">
             
-            <div className="mt-4 whitespace-pre-line text-xs leading-5">
+            <div className="warranty-box">
+  <h3 className="warranty-title">
+    Warranty Details
+  </h3>
 
-              <h3 className="font-semibold mb-2">
-                Warranty Details:
-              </h3>
+  <div className="warranty-content whitespace-pre-line">
+    {bill.specialInstructions.otherComments}
+  </div>
+</div>
 
-              <p>{bill.specialInstructions.otherComments}</p>
-
-            </div>
             <p className="mt-4 text-center">
               If you have any questions about this invoice, please contact us at {business?.phone}
             </p>
