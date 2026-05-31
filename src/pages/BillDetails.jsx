@@ -329,13 +329,8 @@ const downloadPDF = async () => {
                         <strong>Motor No:</strong> {product.motorNumber}
                       </p>
 
-                      <p>
-                        <strong>Battery Type:</strong> {product.battery}
-                      </p>
+                      
 
-                      <div className="font-semibold text-sm mt-1">
-                        GST: ₹{product.gstAmount}
-                      </div>
 
                     </td>
                      <td className="py-2 text-right">{product.quantity}</td>
@@ -387,14 +382,14 @@ const downloadPDF = async () => {
           <div className="p-6 text-sm text-gray-600 border-t border-gray-200">
             
             <div className="warranty-box">
-  <h3 className="warranty-title">
-    Warranty Details
-  </h3>
+            <h3 className="warranty-title">
+              Warranty Details
+            </h3>
 
-  <div className="warranty-content whitespace-pre-line">
-    {bill.specialInstructions.otherComments}
-  </div>
-</div>
+            <div className="warranty-content whitespace-pre-line">
+              {bill.specialInstructions.otherComments}
+            </div>
+          </div>
 
             <p className="mt-4 text-center">
               If you have any questions about this invoice, please contact us at {business?.phone}
