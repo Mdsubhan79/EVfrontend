@@ -244,78 +244,70 @@ const downloadPDF = async () => {
           </div>
           {/* Bike Specifications */}
 
-          <div className="p-6 border-b border-gray-200">
+          <div className="bike-specs">
+  <h3 className="bike-specs-title">Bike Specifications</h3>
 
-            <h3 className="text-lg font-bold mb-4">
-              Bike Specifications
-            </h3>
+  {bill.products.map((product, index) => (
+    <div key={index} className="bike-specs-grid">
 
-            {bill.products.map((product,index) => (
+      <div className="spec-item">
+        <span className="spec-label">Model</span>
+        <span className="spec-value">{product.model}</span>
+      </div>
 
-              <div
-                key={index}
-                className="grid grid-cols-2 md:grid-cols-3 gap-4"
-              >
+      <div className="spec-item">
+        <span className="spec-label">Color</span>
+        <span className="spec-value">{product.color}</span>
+      </div>
 
-                <div>
-                  <strong>Model:</strong>
-                  <p>{product.model}</p>
-                </div>
+      <div className="spec-item">
+        <span className="spec-label">Battery Type</span>
+        <span className="spec-value">{product.batteryType}</span>
+      </div>
 
-                <div>
-                  <strong>Color:</strong>
-                  <p>{product.color}</p>
-                </div>
+      <div className="spec-item">
+        <span className="spec-label">Motor Power</span>
+        <span className="spec-value">{product.motorPower}</span>
+      </div>
 
-                <div>
-                  <strong>Battery Type:</strong>
-                  <p>{product.batteryType}</p>
-                </div>
+      <div className="spec-item">
+        <span className="spec-label">Range</span>
+        <span className="spec-value">{product.range}</span>
+      </div>
 
-                <div>
-                  <strong>Motor Power:</strong>
-                  <p>{product.motorPower}</p>
-                </div>
+      <div className="spec-item">
+        <span className="spec-label">Top Speed</span>
+        <span className="spec-value">{product.topSpeed}</span>
+      </div>
 
-                <div>
-                  <strong>Range:</strong>
-                  <p>{product.range}</p>
-                </div>
+      <div className="spec-item">
+        <span className="spec-label">Charging Time</span>
+        <span className="spec-value">{product.chargingTime}</span>
+      </div>
 
-                <div>
-                  <strong>Top Speed:</strong>
-                  <p>{product.topSpeed}</p>
-                </div>
+      <div className="spec-item">
+        <span className="spec-label">Controller</span>
+        <span className="spec-value">{product.controller}</span>
+      </div>
 
-                <div>
-                  <strong>Charging Time:</strong>
-                  <p>{product.chargingTime}</p>
-                </div>
+      <div className="spec-item">
+        <span className="spec-label">Wheel Size</span>
+        <span className="spec-value">{product.wheelSize}</span>
+      </div>
 
-                <div>
-                  <strong>Chassis No:</strong>
-                  <p>{product.chassisNumber}</p>
-                </div>
+      <div className="spec-item">
+        <span className="spec-label">Chassis No</span>
+        <span className="spec-value">{product.chassisNumber}</span>
+      </div>
 
-                <div>
-                  <strong>Motor No:</strong>
-                  <p>{product.motorNumber}</p>
-                </div>
-                <div>
-                  <strong>Controller:</strong>
-                  <p>{product.controller}</p>
-                </div>
+      <div className="spec-item">
+        <span className="spec-label">Motor No</span>
+        <span className="spec-value">{product.motorNumber}</span>
+      </div>
 
-                <div>
-                  <strong>Wheel Size:</strong>
-                  <p>{product.wheelSize}</p>
-                </div>
-
-              </div>
-
-            ))}
-
-          </div>
+    </div>
+  ))}
+</div>
 
 
           {/* Products Table */}
