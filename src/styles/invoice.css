@@ -99,7 +99,7 @@ body {
 ====================================================== */
 
 .bike-specs {
-  margin: 0 20px 20px;
+  margin: 3 20px 20px;
   padding: 16px;
   background: #ffffff;
   border: 1px solid #d1d5db;
@@ -118,7 +118,7 @@ body {
 .bike-specs-grid {
   display: grid;
   grid-template-columns: repeat(2,1fr);
-  gap: 10px;
+  gap: 8px;
 }
 
 .spec-item {
