@@ -343,7 +343,7 @@ const downloadPDF = async () => {
           </div>
           
             {/* Totals */}
-              <div className="w-full sm:w-72 space-y-3">
+              <div className="px-6 pt-2 pb-1 bg-gray-50">
 
                 <div className="flex justify-end">
 
@@ -381,7 +381,7 @@ const downloadPDF = async () => {
           {/* Warranty & Footer */}
           <div className="p-6 text-sm text-gray-600 border-t border-gray-200">
             
-            <div className="warranty-box mt-2">
+            <div className="warranty-box">
             <h3 className="warranty-title">
               Warranty Details
             </h3>
