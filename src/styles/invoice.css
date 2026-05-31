@@ -14,189 +14,282 @@ body {
   font-family: Arial, sans-serif;
 }
 
-/* =========================================================
-   MAIN INVOICE CONTAINER
-========================================================= */
+/* ======================================================
+   PREMIUM EV INVOICE DESIGN
+====================================================== */
 
 .print-container {
   width: 794px;
   min-height: 1123px;
-  background: white;
+  background: #ffffff;
   margin: auto;
-  padding: 20px;
-  box-sizing: border-box;
+  border-radius: 14px;
   overflow: hidden;
+  box-shadow: 0 10px 35px rgba(0,0,0,0.08);
 }
 
-/* =========================================================
-   PREVENT PAGE BREAKS
-========================================================= */
+/* ======================================================
+   HEADER
+====================================================== */
 
-.invoice-print {
-  page-break-inside: avoid;
-  break-inside: avoid;
+.invoice-header {
+  padding: 28px;
+  border-bottom: 3px solid #16a34a;
+  background: linear-gradient(
+    to right,
+    #ffffff,
+    #f0fdf4
+  );
 }
 
-/* =========================================================
-   TABLE FIXES
-========================================================= */
+.invoice-company {
+  font-size: 32px;
+  font-weight: 800;
+  color: #111827;
+}
 
-.invoice-print table {
+.invoice-tagline {
+  color: #6b7280;
+  margin-top: 4px;
+}
+
+.invoice-number {
+  text-align: right;
+  color: #4b5563;
+}
+
+/* ======================================================
+   BUSINESS & CUSTOMER
+====================================================== */
+
+.details-section {
+  padding: 20px;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 18px;
+}
+
+.details-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.details-card h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #f3f4f6;
+}
+
+.details-card p {
+  font-size: 12px;
+  color: #4b5563;
+  margin: 6px 0;
+}
+
+/* ======================================================
+   BIKE SPECIFICATIONS
+====================================================== */
+
+.bike-specs {
+  margin: 0 20px 20px;
+  padding: 16px;
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+}
+
+.bike-specs-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 15px;
+  padding-left: 10px;
+  border-left: 4px solid #16a34a;
+}
+
+.bike-specs-grid {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 10px;
+}
+
+.spec-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+.spec-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+.spec-value {
+  font-size: 12px;
+  font-weight: 700;
+  color: #111827;
+}
+
+/* ======================================================
+   TABLE
+====================================================== */
+
+.invoice-table {
   width: 100%;
   border-collapse: collapse;
 }
 
-.invoice-print th,
-.invoice-print td {
-  padding: 8px;
-  vertical-align: top;
-  word-break: break-word;
+.invoice-table thead {
+  background: #f3f4f6;
 }
 
-/* =========================================================
-   IMAGES
-========================================================= */
-
-.invoice-print img {
-  max-width: 100%;
-  object-fit: contain;
+.invoice-table th {
+  padding: 12px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #374151;
 }
 
-/* =========================================================
-   ACTION BUTTONS
-========================================================= */
+.invoice-table td {
+  padding: 12px;
+  border-bottom: 1px solid #e5e7eb;
+}
 
-.no-print {
+.invoice-table tbody tr:nth-child(even) {
+  background: #fafafa;
+}
+
+/* ======================================================
+   TOTAL BOX
+====================================================== */
+
+.total-wrapper {
+  padding: 20px;
+  background: #fafafa;
+}
+
+.total-box {
+  width: 320px;
+  margin-left: auto;
+  background: #ffffff;
+  border: 2px solid #16a34a;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.total-row {
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  justify-content: space-between;
+  margin-bottom: 10px;
 }
 
-/* =========================================================
-   BILL ACTION BUTTONS MOBILE
-========================================================= */
-
-@media (max-width: 768px) {
-
-  .bill-actions {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-  }
-
-  .bill-actions button {
-    width: 100%;
-    justify-content: center;
-    font-size: 12px;
-    padding: 10px;
-  }
-
+.total-grand {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 2px dashed #d1d5db;
+  font-size: 26px;
+  font-weight: 800;
+  color: #16a34a;
 }
 
-/* =========================================================
-   MOBILE RESPONSIVE INVOICE
-========================================================= */
+/* ======================================================
+   WARRANTY
+====================================================== */
 
-@media screen and (max-width: 768px) {
-
-  body {
-    background: #ffffff;
-  }
-
-  .print-container {
-    width: 100%;
-    min-height: auto;
-    padding: 12px;
-    box-shadow: none;
-    border-radius: 0;
-  }
-
-  #bill-preview {
-    font-size: 11px;
-  }
-
-  #bill-preview h1 {
-    font-size: 20px;
-    line-height: 1.3;
-  }
-
-  #bill-preview h2 {
-    font-size: 16px;
-  }
-
-  #bill-preview h3 {
-    font-size: 13px;
-  }
-
-  #bill-preview p,
-  #bill-preview span,
-  #bill-preview td,
-  #bill-preview th,
-  #bill-preview div {
-    font-size: 10px !important;
-    line-height: 1.5;
-  }
-
-  .invoice-print table {
-    min-width: 100% !important;
-  }
-
-  .invoice-print th,
-  .invoice-print td {
-    padding: 5px;
-  }
-
+.warranty-box {
+  margin-top: 15px;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  background: #fafafa;
+  padding: 16px;
 }
 
-/* =========================================================
-   VERY SMALL DEVICES (240px - 480px)
-========================================================= */
+.warranty-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 10px;
+}
 
-@media screen and (max-width: 480px) {
+.warranty-content {
+  line-height: 1.9;
+  color: #374151;
+  font-size: 12px;
+}
 
-  .print-container {
-    padding: 8px;
+/* ======================================================
+   SIGNATURE
+====================================================== */
+
+.signature-area {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 35px;
+}
+
+.signature-box {
+  width: 220px;
+  text-align: center;
+}
+
+.signature-line {
+  border-top: 1px solid #111827;
+  padding-top: 8px;
+  font-weight: 600;
+}
+
+/* ======================================================
+   MOBILE
+====================================================== */
+
+@media (max-width:768px){
+
+  .details-grid{
+    grid-template-columns:1fr;
   }
 
-  #bill-preview h1 {
-    font-size: 16px;
+  .bike-specs-grid{
+    grid-template-columns:1fr;
   }
 
-  #bill-preview p,
-  #bill-preview span,
-  #bill-preview td,
-  #bill-preview th,
-  #bill-preview div {
-    font-size: 9px !important;
+  .total-box{
+    width:100%;
   }
 
-  .bill-actions {
-    grid-template-columns: 1fr;
+  .print-container{
+    border-radius:0;
+    box-shadow:none;
   }
 
 }
 
-/* =========================================================
-   PRINT MODE
-========================================================= */
+/* ======================================================
+   PRINT
+====================================================== */
 
 @media print {
 
-  body {
-    background: white !important;
+  .print-container{
+    box-shadow:none !important;
+    border-radius:0 !important;
   }
 
-  .no-print {
-    display: none !important;
-  }
-
-  .print-container {
-    width: 210mm;
-    min-height: 297mm;
-    margin: 0;
-    padding: 10mm;
-    box-shadow: none;
-    overflow: hidden;
+  .no-print{
+    display:none !important;
   }
 
 }
