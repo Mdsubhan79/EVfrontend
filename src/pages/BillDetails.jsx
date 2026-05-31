@@ -285,10 +285,10 @@ const downloadPDF = async () => {
         <span className="spec-value">{product.chargingTime}</span>
       </div>
 
-      <div className="spec-item">
+      {/* <div className="spec-item">
         <span className="spec-label">Controller</span>
         <span className="spec-value">{product.controller}</span>
-      </div>
+      </div> */}
 
       <div className="spec-item">
         <span className="spec-label">Wheel Size</span>
