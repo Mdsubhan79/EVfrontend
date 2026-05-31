@@ -248,6 +248,89 @@ export default function EditBill() {
                       required
                       className="px-3 py-2 border border-gray-300 rounded-lg"
                     />
+                    <input
+                    type="text"
+                    value={product.model || ''}
+                    onChange={(e) =>
+                        handleProductChange(index,'model',e.target.value)
+                    }
+                    placeholder="Model"
+                  />
+
+                  <input
+                    type="text"
+                    value={product.color || ''}
+                    onChange={(e) =>
+                        handleProductChange(index,'color',e.target.value)
+                    }
+                    placeholder="Color"
+                  />
+
+                  <input
+                    type="text"
+                    value={product.batteryType || ''}
+                    onChange={(e) =>
+                        handleProductChange(index,'batteryType',e.target.value)
+                    }
+                    placeholder="Battery Type"
+                  />
+
+                  <input
+                    type="text"
+                    value={product.motorPower || ''}
+                    onChange={(e) =>
+                        handleProductChange(index,'motorPower',e.target.value)
+                    }
+                    placeholder="Motor Power"
+                  />
+
+                  <input
+                    type="text"
+                    value={product.range || ''}
+                    onChange={(e) =>
+                        handleProductChange(index,'range',e.target.value)
+                    }
+                    placeholder="Range"
+                  />
+                  <input
+                  type="text"
+                  value={product.topSpeed || ''}
+                  onChange={(e) =>
+                    handleProductChange(index,'topSpeed',e.target.value)
+                  }
+                  placeholder="Top Speed"
+                  className="px-3 py-2 border border-gray-300 rounded-lg"
+                />
+
+                <input
+                  type="text"
+                  value={product.chargingTime || ''}
+                  onChange={(e) =>
+                    handleProductChange(index,'chargingTime',e.target.value)
+                  }
+                  placeholder="Charging Time"
+                  className="px-3 py-2 border border-gray-300 rounded-lg"
+                />
+
+                <input
+                  type="text"
+                  value={product.controller || ''}
+                  onChange={(e) =>
+                    handleProductChange(index,'controller',e.target.value)
+                  }
+                  placeholder="Controller"
+                  className="px-3 py-2 border border-gray-300 rounded-lg"
+                />
+
+                <input
+                  type="text"
+                  value={product.wheelSize || ''}
+                  onChange={(e) =>
+                    handleProductChange(index,'wheelSize',e.target.value)
+                  }
+                  placeholder="Wheel Size"
+                  className="px-3 py-2 border border-gray-300 rounded-lg"
+                />
                   </div>
                 </div>
               ))}

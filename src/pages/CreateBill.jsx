@@ -23,6 +23,16 @@ export default function CreateBill() {
   const [comments, setComments] = useState(
     'Motor, Controller & Charger Warranty: 12 Months\nBattery Warranty: 12 Months'
   );
+const [model, setModel] = useState('');
+const [color, setColor] = useState('');
+const [batteryType, setBatteryType] = useState('');
+const [motorPower, setMotorPower] = useState('');
+const [range, setRange] = useState('');
+const [topSpeed, setTopSpeed] = useState('');
+const [chargingTime, setChargingTime] = useState('');
+const [controller, setController] = useState('');
+const [wheelSize, setWheelSize] = useState('');
+
 
 useEffect(() => {
 
@@ -89,18 +99,29 @@ const handleCreateBill = async (e) => {
       },
 
       products: [
-        {
-          quantity: Number(quantity),
-          name: productName,
-          description: description,
-          chassisNumber: chassisNumber,
-          motorNumber: motorNumber,
-          battery: batteryNumber,
-          unitPrice: `₹${price} (GST ${gstRate}% Included)`,
-          priceWithoutGst: Number(subTotal.toFixed(2)),
-          gstAmount: Number(gstAmount.toFixed(2)),
-          totalPrice: Number(grandTotal.toFixed(2)),
-        }
+      {
+        quantity: Number(quantity),
+        name: productName,
+        description,
+        chassisNumber,
+        motorNumber,
+        battery: batteryNumber,
+
+        model,
+        color,
+        batteryType,
+        motorPower,
+        range,
+        topSpeed,
+        chargingTime,
+        controller,
+        wheelSize,
+        unitPrice: `₹${price} (GST ${gstRate}% Included)`,
+
+        priceWithoutGst: Number(subTotal.toFixed(2)),
+        gstAmount: Number(gstAmount.toFixed(2)),
+        totalPrice: Number(grandTotal.toFixed(2))
+      }
       ],
 
       subTotal: Number(subTotal.toFixed(2)),
@@ -270,6 +291,76 @@ const handleCreateBill = async (e) => {
                 onChange={(e) => setPrice(e.target.value)}
                 className="border p-3 rounded-lg"
               />
+              <input
+                type="text"
+                placeholder="Model"
+                value={model}
+                onChange={(e) => setModel(e.target.value)}
+                className="border p-3 rounded-lg"
+              />
+
+              <input
+                type="text"
+                placeholder="Color"
+                value={color}
+                onChange={(e) => setColor(e.target.value)}
+                className="border p-3 rounded-lg"
+              />
+
+              <input
+                type="text"
+                placeholder="Battery Type"
+                value={batteryType}
+                onChange={(e) => setBatteryType(e.target.value)}
+                className="border p-3 rounded-lg"
+              />
+
+              <input
+                type="text"
+                placeholder="Motor Power"
+                value={motorPower}
+                onChange={(e) => setMotorPower(e.target.value)}
+                className="border p-3 rounded-lg"
+              />
+
+              <input
+                type="text"
+                placeholder="Range"
+                value={range}
+                onChange={(e) => setRange(e.target.value)}
+                className="border p-3 rounded-lg"
+              />
+
+              <input
+                type="text"
+                placeholder="Top Speed"
+                value={topSpeed}
+                onChange={(e) => setTopSpeed(e.target.value)}
+                className="border p-3 rounded-lg"
+              />
+
+              <input
+                type="text"
+                placeholder="Charging Time"
+                value={chargingTime}
+                onChange={(e) => setChargingTime(e.target.value)}
+                className="border p-3 rounded-lg"
+              />
+              <input
+              type="text"
+              placeholder="Controller"
+              value={controller}
+              onChange={(e) => setController(e.target.value)}
+              className="border p-3 rounded-lg"
+            />
+
+            <input
+              type="text"
+              placeholder="Wheel Size"
+              value={wheelSize}
+              onChange={(e) => setWheelSize(e.target.value)}
+              className="border p-3 rounded-lg"
+            />
 
             </div>
 

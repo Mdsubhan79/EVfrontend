@@ -242,7 +242,82 @@ const downloadPDF = async () => {
               </div>
             </div>
           </div>
-          
+          {/* Bike Specifications */}
+
+          <div className="p-6 border-b border-gray-200">
+
+            <h3 className="text-lg font-bold mb-4">
+              Bike Specifications
+            </h3>
+
+            {bill.products.map((product,index) => (
+
+              <div
+                key={index}
+                className="grid grid-cols-2 md:grid-cols-3 gap-4"
+              >
+
+                <div>
+                  <strong>Model:</strong>
+                  <p>{product.model}</p>
+                </div>
+
+                <div>
+                  <strong>Color:</strong>
+                  <p>{product.color}</p>
+                </div>
+
+                <div>
+                  <strong>Battery Type:</strong>
+                  <p>{product.batteryType}</p>
+                </div>
+
+                <div>
+                  <strong>Motor Power:</strong>
+                  <p>{product.motorPower}</p>
+                </div>
+
+                <div>
+                  <strong>Range:</strong>
+                  <p>{product.range}</p>
+                </div>
+
+                <div>
+                  <strong>Top Speed:</strong>
+                  <p>{product.topSpeed}</p>
+                </div>
+
+                <div>
+                  <strong>Charging Time:</strong>
+                  <p>{product.chargingTime}</p>
+                </div>
+
+                <div>
+                  <strong>Chassis No:</strong>
+                  <p>{product.chassisNumber}</p>
+                </div>
+
+                <div>
+                  <strong>Motor No:</strong>
+                  <p>{product.motorNumber}</p>
+                </div>
+                <div>
+                  <strong>Controller:</strong>
+                  <p>{product.controller}</p>
+                </div>
+
+                <div>
+                  <strong>Wheel Size:</strong>
+                  <p>{product.wheelSize}</p>
+                </div>
+
+              </div>
+
+            ))}
+
+          </div>
+
+
           {/* Products Table */}
           <div className="p-3 sm:p-6 overflow-x-auto">
           <table className="w-full text-[13px] sm:text-sm">
