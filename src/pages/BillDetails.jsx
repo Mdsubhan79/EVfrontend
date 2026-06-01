@@ -43,32 +43,62 @@ const [billRes, businessRes] = await Promise.all([
       setLoading(false);
     }
   };
-
 const downloadPDF = async () => {
-
   try {
-
     const input = document.getElementById('bill-preview');
 
     if (!input) {
-      toast.error('Invoice not found');
+      toast.error('Invoice element not found');
       return;
     }
 
-    // High quality canvas
+    // Show loading toast
+    const loadingToast = toast.loading('Generating PDF...');
+
+    // Force the container to have exact A4 proportions for capture
+    const originalWidth = input.style.width;
+    const originalMaxWidth = input.style.maxWidth;
+    
+    input.style.width = '794px';
+    input.style.maxWidth = '794px';
+    input.style.transform = 'none';
+    input.style.zoom = '1';
+
+    // Small delay to ensure styles are applied
+    await new Promise(resolve => setTimeout(resolve, 100));
+
+    // High quality canvas with better settings
     const canvas = await html2canvas(input, {
-      scale: window.devicePixelRatio * 2,
+      scale: 2,  // Fixed scale for consistency
       useCORS: true,
+      allowTaint: true,
       logging: false,
-      backgroundColor: "#ffffff",
+      backgroundColor: '#ffffff',
       scrollY: -window.scrollY,
-      windowWidth: 1200,
-      letterRendering: true,
+      windowWidth: 794,
+      windowHeight: input.scrollHeight,
+      width: 794,
+      height: input.scrollHeight,
+      onclone: (clonedDoc) => {
+        // Ensure all styles are applied in cloned document
+        const clonedElement = clonedDoc.getElementById('bill-preview');
+        if (clonedElement) {
+          clonedElement.style.width = '794px';
+          clonedElement.style.maxWidth = '794px';
+          clonedElement.style.transform = 'none';
+          clonedElement.style.zoom = '1';
+        }
+      }
     });
 
-    // PNG gives sharper text
-    const imgData = canvas.toDataURL('image/png');
+    // Restore original styles
+    input.style.width = originalWidth;
+    input.style.maxWidth = originalMaxWidth;
 
+    // Use PNG for better quality
+    const imgData = canvas.toDataURL('image/png', 1.0);
+    
+    // Calculate dimensions to fit A4
     const pdf = new jsPDF({
       orientation: 'portrait',
       unit: 'mm',
@@ -76,34 +106,46 @@ const downloadPDF = async () => {
       compress: true
     });
 
-    const pdfWidth = 210;
-    const pdfHeight = 297;
+    const pdfWidth = 210; // A4 width in mm
+    const pdfHeight = 297; // A4 height in mm
+    
+    // Calculate image dimensions to fit page
+    const imgWidth = pdfWidth;
+    const imgHeight = (canvas.height * pdfWidth) / canvas.width;
+    
+    let heightLeft = imgHeight;
+    let position = 0;
+    let pageCount = 1;
 
-    pdf.addImage(
-      imgData,
-      'PNG',
-      0,
-      0,
-      pdfWidth,
-      pdfHeight,
-      undefined,
-      'FAST'
-    );
+    // Add first page
+    pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+    heightLeft -= pdfHeight;
 
-    pdf.save(`${bill.customerDetails.name}-${bill.invoiceNumber}.pdf`);
+    // Add additional pages if content overflows
+    while (heightLeft > 0) {
+      position = - (pdfHeight * pageCount);
+      pdf.addPage();
+      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+      heightLeft -= pdfHeight;
+      pageCount++;
+    }
 
-    toast.success('PDF Downloaded');
+    // Generate filename
+    const customerName = bill?.customerDetails?.name || 'Customer';
+    const invoiceNumber = bill?.invoiceNumber || 'Invoice';
+    const sanitizedName = customerName.replace(/[^a-zA-Z0-9]/g, '_');
+    const filename = `${sanitizedName}-${invoiceNumber}.pdf`;
+
+    pdf.save(filename);
+    
+    toast.dismiss(loadingToast);
+    toast.success('PDF Downloaded Successfully');
 
   } catch (error) {
-
-    console.log(error);
-
-    toast.error('Failed to download PDF');
-
+    console.error('PDF Generation Error:', error);
+    toast.error('Failed to download PDF. Please try again.');
   }
-
 };
-
     const handleSendWhatsApp = async () => {
 
       const phoneNumber = prompt(
