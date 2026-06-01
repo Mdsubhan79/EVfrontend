@@ -395,15 +395,7 @@ const handleCreateBill = async (e) => {
               <div className="mb-8 text-right">
 
                 <div className="space-y-2 text-right">
-                  <div className="mt-2">
-                  <span className="font-semibold">
-                    Payment Mode:
-                  </span>
-
-                  <span className="ml-2 px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold">
-                    {bill.paymentMode?.replace('_', ' ').toUpperCase()}
-                  </span>
-                </div>
+                  
                   <h2 className="text-lg font-semibold">
                     Subtotal: ₹ {subTotal}
                   </h2>

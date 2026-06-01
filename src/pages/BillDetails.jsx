@@ -332,7 +332,7 @@ const downloadPDF = async () => {
                       <div className="font-semibold text-sm mt-1">
                         GST: ₹{product.gstAmount}
                       </div>
-                      
+
                       
                  
 
@@ -352,6 +352,15 @@ const downloadPDF = async () => {
                 <div className="flex justify-end">
 
                   <div className="w-full sm:w-72 space-y-3">
+                    <div className="mt-2">
+                    <span className="font-semibold">
+                      Payment Mode:
+                    </span>
+
+                    <span className="ml-2 px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold">
+                      {bill.paymentMode?.replace('_', ' ').toUpperCase()}
+                    </span>
+                  </div>
 
                     <div className="flex justify-between text-lg">
                       <span>Subtotal:</span>
