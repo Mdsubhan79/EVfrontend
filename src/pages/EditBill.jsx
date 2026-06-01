@@ -158,29 +158,41 @@ export default function EditBill() {
     setCustomerDetails(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleProductChange = (index, field, value) => {
-    const updatedProducts = [...products];
-    
-    // Handle numeric fields
-    if (field === 'quantity' || field === 'unitPrice') {
-      updatedProducts[index][field] = parseFloat(value) || 0;
-    } else {
-      updatedProducts[index][field] = value;
-    }
-    
-    // Auto-calculate GST and total for this product
-    if (field === 'quantity' || field === 'unitPrice') {
-      const qty = updatedProducts[index].quantity || 0;
-      const price = updatedProducts[index].unitPrice || 0;
-      const productTotal = qty * price;
-      const gstAmount = (productTotal * gstRate) / 100;
-      
-      updatedProducts[index].totalPrice = productTotal;
-      updatedProducts[index].gstAmount = gstAmount;
-    }
-    
-    setProducts(updatedProducts);
-  };
+const handleProductChange = (index, field, value) => {
+  const updatedProducts = [...products];
+
+  if (field === 'quantity' || field === 'unitPrice') {
+    updatedProducts[index][field] = Number(value) || 0;
+  } else {
+    updatedProducts[index][field] = value;
+  }
+
+  const qty = Number(updatedProducts[index].quantity) || 0;
+  const unitPrice = Number(updatedProducts[index].unitPrice) || 0;
+
+  // Grand Total (selling price)
+  const grandTotal = qty * unitPrice;
+
+  // GST from business settings
+  const gstAmount = (grandTotal * gstRate) / 100;
+
+  // Subtotal excluding GST
+  const subTotal = grandTotal - gstAmount;
+
+  updatedProducts[index].priceWithoutGst = Number(
+    subTotal.toFixed(2)
+  );
+
+  updatedProducts[index].gstAmount = Number(
+    gstAmount.toFixed(2)
+  );
+
+  updatedProducts[index].totalPrice = Number(
+    grandTotal.toFixed(2)
+  );
+
+  setProducts(updatedProducts);
+};
 
   const addProduct = () => {
     setProducts([...products, {
