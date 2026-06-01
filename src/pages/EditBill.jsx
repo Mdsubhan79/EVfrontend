@@ -412,7 +412,7 @@ ${specialInstructions.otherComments}`;
             {/* Products Section */}
             <div className="bill-form-section">
               <div className="flex justify-between items-center mb-4">
-                <h3 className="bill-form-title">📦 Product Details</h3>
+                <h3 className="bill-form-title"> Product Details</h3>
                 <button
                   type="button"
                   onClick={addProduct}
@@ -529,7 +529,7 @@ ${specialInstructions.otherComments}`;
                   {/* Vehicle Specifications */}
                   <details className="mt-2">
                     <summary className="cursor-pointer text-sm font-medium text-blue-600 hover:text-blue-700">
-                      ⚙️ Vehicle Specifications (Optional)
+                      ⚙️ Vehicle Specifications
                     </summary>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-3 pt-3 border-t border-gray-200">
                       <div>
@@ -636,23 +636,46 @@ ${specialInstructions.otherComments}`;
                   </details>
 
                   {/* Product Totals */}
-                  <div className="mt-3 pt-3 border-t border-gray-200 flex justify-end gap-4 text-sm">
+                  <div className="mt-3 pt-3 border-t border-gray-200 flex flex-wrap justify-end gap-6 text-sm">
+
                     <div>
-                      <span className="text-gray-500">Product Total:</span>
+                      <span className="text-gray-500">
+                        Product Total:
+                      </span>
+
                       <span className="ml-2 font-semibold">
-                        ₹{((product.quantity || 0) * (product.unitPrice || 0)).toLocaleString()}
+                        ₹{(
+                          (Number(product.quantity) || 0) *
+                          (Number(product.priceWithoutGst) || 0)
+                        ).toLocaleString()}
                       </span>
                     </div>
+
                     <div>
-                      <span className="text-gray-500">GST ({gstRate}%):</span>
+                      <span className="text-gray-500">
+                        GST:
+                      </span>
+
                       <span className="ml-2 font-semibold text-green-600">
-                        ₹{(((product.quantity || 0) * (product.unitPrice || 0) * gstRate) / 100).toLocaleString()}
+                        ₹{Number(product.gstAmount || 0).toLocaleString()}
                       </span>
                     </div>
+
+                    <div>
+                      <span className="text-gray-500">
+                        Total Amount:
+                      </span>
+
+                      <span className="ml-2 font-semibold text-blue-600">
+                        ₹{Number(product.totalPrice || 0).toLocaleString()}
+                      </span>
+                    </div>
+
                   </div>
                 </div>
               ))}
             </div>
+            
 
             {/* Payment Mode Section */}
             <div className="bill-form-section">
