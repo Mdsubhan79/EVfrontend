@@ -41,6 +41,8 @@ body {
   min-height: 1123px;
   overflow: visible;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 #bill-preview * {
@@ -415,6 +417,13 @@ body {
 }
 
 /* ======================================================
+   CONTENT AREA - Flex grow to push signature down
+====================================================== */
+.invoice-content {
+  flex: 1;
+}
+
+/* ======================================================
    FOOTER - Compact Professional
 ====================================================== */
 .invoice-footer {
@@ -422,6 +431,7 @@ body {
   text-align: center;
   background: #f8fafc;
   border-top: 1px solid #e2e8f0;
+  margin-top: auto;
 }
 
 .invoice-footer-text {
@@ -437,17 +447,19 @@ body {
 }
 
 /* ======================================================
-   SIGNATURE - Compact Professional
+   SIGNATURE - At Bottom
 ====================================================== */
 .signature-area {
   display: flex;
   justify-content: flex-end;
-  margin-top: 16px;
-  padding: 0 32px 20px;
+  padding: 16px 32px 24px;
+  background: #ffffff;
+  border-top: 1px solid #e2e8f0;
+  margin-top: auto;
 }
 
 .signature-box {
-  width: 180px;
+  width: 200px;
   text-align: center;
 }
 
@@ -457,27 +469,28 @@ body {
   font-weight: 700;
   font-size: 9px;
   text-transform: uppercase;
-  padding: 6px;
+  padding: 6px 10px;
   border-radius: 4px;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   transform: rotate(-5deg);
   opacity: 0.8;
   letter-spacing: 2px;
+  display: inline-block;
 }
 
 .signature-line {
   border-top: 1px solid #94a3b8;
-  padding-top: 6px;
+  padding-top: 8px;
   font-weight: 600;
   color: #475569;
   font-size: 11px;
-  margin-top: 16px;
+  margin-top: 20px;
 }
 
 .signature-name {
   font-size: 10px;
   color: #64748b;
-  margin-top: 3px;
+  margin-top: 4px;
 }
 
 /* ======================================================
@@ -494,6 +507,7 @@ body {
   pointer-events: none;
   white-space: nowrap;
   letter-spacing: 20px;
+  z-index: 0;
 }
 
 /* ======================================================
@@ -544,11 +558,15 @@ body {
   }
   
   .signature-area {
-    padding: 0 14px 16px;
+    padding: 12px 14px 20px;
   }
   
   .invoice-footer {
     padding: 8px 14px;
+  }
+  
+  .signature-box {
+    width: 160px;
   }
 }
 
