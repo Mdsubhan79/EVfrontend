@@ -150,7 +150,7 @@ export default function BillDetails() {
                  `📋 Invoice No: *${bill?.invoiceNumber}*\n` +
                  `💰 Total Amount: *₹${bill?.grandTotal}*\n` +
                  `📅 Date: ${new Date(bill?.createdAt).toLocaleDateString()}\n\n` +
-                 `Thank you for your purchase! \n\n` +
+                 `Thank you for your purchase! 🙏\n\n` +
                  `For queries: 📞 ${business?.phone || 'N/A'}`;
     
     window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(text)}`, '_blank');
