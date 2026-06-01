@@ -54,6 +54,7 @@ export default function BillDetails() {
       const loadingToast = toast.loading('Generating PDF...');
 
       const clone = input.cloneNode(true);
+      clone.classList.add('pdf-mode');
       clone.style.width = '794px';
       clone.style.maxWidth = '794px';
       clone.style.minHeight = '1123px';
@@ -86,7 +87,7 @@ export default function BillDetails() {
           scrollY: 0
         });
 
-      document.body.removeChild(pdf-mode);
+      document.body.removeChild(clone);
 
       const pdf = new jsPDF({
         orientation: 'portrait',
