@@ -369,7 +369,7 @@ export default function BillDetails() {
           
           {/* Warranty - Now visible */}
           <div className="warranty-box">
-            <h3 className="warranty-title">🛡️ Warranty Information</h3>
+            <h3 className="warranty-title"> Warranty Information</h3>
             <div className="warranty-content whitespace-pre-line">
               {bill.specialInstructions?.otherComments || 
                '• Motor, Controller & Charger: 12 Months Warranty\n• Battery: 12 Months Warranty\n\nIf you have any questions about this invoice, please contact the above given numbers.'}
@@ -389,7 +389,7 @@ export default function BillDetails() {
           {/* Signature - Now visible */}
           <div className="signature-area">
             <div className="signature-box">
-              <div className="signature-stamp">AUTHORIZED</div>
+              
               <div className="signature-line">Authorized Signatory</div>
               <p className="signature-name">{business?.businessName || 'Company'}</p>
             </div>
