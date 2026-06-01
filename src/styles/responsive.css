@@ -1200,3 +1200,74 @@
   }
 
 }
+
+/* ====================================
+   PDF MODE - ALWAYS DESKTOP
+==================================== */
+
+.pdf-mode {
+  width: 794px !important;
+  max-width: 794px !important;
+  min-width: 794px !important;
+  background: #fff !important;
+}
+
+.pdf-mode .details-grid {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+}
+
+.pdf-mode .bike-specs-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+}
+
+.pdf-mode .invoice-table {
+  width: 100% !important;
+}
+
+.pdf-mode .invoice-table th,
+.pdf-mode .invoice-table td {
+  font-size: 12px !important;
+}
+
+.pdf-mode .total-wrapper {
+  display: flex !important;
+  justify-content: flex-end !important;
+}
+
+.pdf-mode .signature-area {
+  position: absolute !important;
+  right: 30px !important;
+  bottom: 20px !important;
+}
+@media screen and (max-width: 480px) {
+
+  .details-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .bike-specs-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .total-wrapper {
+    justify-content: center !important;
+  }
+
+  .total-box {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .warranty-box {
+    padding: 12px !important;
+  }
+
+  .signature-area {
+    position: static !important;
+    text-align: center !important;
+    margin-top: 20px !important;
+  }
+
+}

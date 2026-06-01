@@ -1,105 +1,89 @@
 /* =========================================================
-   GLOBAL PRINT SETTINGS - IMPROVED FOR MOBILE
+   GLOBAL PRINT SETTINGS
 ========================================================= */
-@media print {
-  /* Reset all margins and padding for print */
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    margin: 0 !important;
-    padding: 0 !important;
-    background: white !important;
-  }
-  
-  /* Hide all non-printable elements */
-  .no-print,
-  button,
-  .btn,
-  .navbar,
-  .sidebar,
-  .invoice-actions,
-  .action-buttons,
-  header:not(.invoice-header),
-  footer:not(.invoice-footer) {
-    display: none !important;
-  }
-  
-  /* Ensure invoice container is properly sized */
-  .print-container,
-  #bill-preview {
-    width: 100% !important;
-    max-width: 100% !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    background: white !important;
-    box-shadow: none !important;
-    border-radius: 0 !important;
-  }
-  
-  /* Force colors for print */
-  * {
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-    color-adjust: exact !important;
-  }
-  
-  @page {
-    size: A4;
-    margin: 0;
-  }
+@page {
+  size: A4;
+  margin: 0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: #e5e7eb;
+  font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
 }
 
 /* ======================================================
-   PROFESSIONAL EV INVOICE DESIGN - FIXED FOR MOBILE
+   PROFESSIONAL EV INVOICE DESIGN
 ====================================================== */
 .print-container {
-  width: 100%;
+  width: 794px;
   max-width: 794px;
   background: #ffffff;
-  margin: 0 auto;
+  margin: 20px auto;
   border-radius: 8px;
   overflow: visible;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15), 0 1px 3px rgba(0,0,0,0.1);
   box-sizing: border-box;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
+/* ======================================================
+   BILL PREVIEW - Flexible height for screen, fixed for PDF
+====================================================== */
 #bill-preview {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   color: #1a1a1a;
   background: #ffffff;
-  width: 100%;
+  width: 794px;
   max-width: 794px;
+  min-height: 1123px;
   overflow: visible;
   position: relative;
   display: flex;
   flex-direction: column;
 }
 
+#bill-preview * {
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+  color-adjust: exact !important;
+}
+
 /* ======================================================
    HEADER - Professional Layout
 ====================================================== */
 .invoice-header {
-  padding: 20px 24px;
+  padding: 20px 32px;
   border-bottom: 3px solid #1e40af;
   background: linear-gradient(135deg, #ffffff 0%, #f0f4ff 100%);
+  position: relative;
+}
+
+.invoice-header::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: #1e40af;
+  opacity: 0.3;
 }
 
 .invoice-company {
-  font-size: 24px;
+  font-size: 26px;
   font-weight: 700;
   color: #1e293b;
-  margin: 0 0 4px 0;
-  letter-spacing: -0.3px;
+  margin: 0 0 3px 0;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
 }
 
 .invoice-tagline {
   color: #64748b;
-  font-size: 11px;
+  font-size: 12px;
   font-style: italic;
   margin: 0;
 }
@@ -107,11 +91,12 @@
 .invoice-number {
   text-align: right;
   color: #475569;
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .invoice-number p {
   margin: 2px 0;
+  font-weight: 500;
 }
 
 .invoice-number strong {
@@ -123,7 +108,7 @@
    BUSINESS & CUSTOMER - Card Style
 ====================================================== */
 .details-section {
-  padding: 16px 24px;
+  padding: 16px 32px;
   background: #f8fafc;
   border-bottom: 1px solid #e2e8f0;
 }
@@ -137,25 +122,26 @@
 .details-card {
   background: #ffffff;
   border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  padding: 12px;
+  border-radius: 6px;
+  padding: 14px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
 .details-card h3 {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   color: #1e40af;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
   margin: 0 0 8px 0;
   padding-bottom: 6px;
   border-bottom: 2px solid #e2e8f0;
 }
 
 .details-card p {
-  font-size: 10px;
+  font-size: 11px;
   color: #334155;
-  margin: 4px 0;
+  margin: 3px 0;
   line-height: 1.4;
 }
 
@@ -165,18 +151,19 @@
 }
 
 /* ======================================================
-   VEHICLE SPECIFICATIONS - Compact Grid
+   BIKE SPECIFICATIONS - Compact Premium Grid
 ====================================================== */
 .bike-specs {
-  margin: 12px 24px;
-  padding: 12px;
+  margin: 12px 32px;
+  padding: 14px;
   background: #ffffff;
   border: 1px solid #e2e8f0;
-  border-radius: 8px;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
 .bike-specs-title {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
   color: #1e293b;
   margin: 0 0 10px 0;
@@ -188,14 +175,8 @@
 
 .bike-specs-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
-}
-
-@media (max-width: 600px) {
-  .bike-specs-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
 }
 
 .spec-item {
@@ -204,8 +185,14 @@
   align-items: center;
   background: #f8fafc;
   border: 1px solid #e2e8f0;
-  border-radius: 6px;
+  border-radius: 4px;
   padding: 6px 10px;
+  transition: all 0.2s ease;
+}
+
+.spec-item:hover {
+  background: #f0f4ff;
+  border-color: #93c5fd;
 }
 
 .spec-label {
@@ -213,7 +200,7 @@
   font-weight: 600;
   text-transform: uppercase;
   color: #64748b;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.5px;
 }
 
 .spec-value {
@@ -222,26 +209,25 @@
   color: #1e293b;
   text-align: right;
   background: #ffffff;
-  padding: 2px 8px;
-  border-radius: 4px;
+  padding: 1px 6px;
+  border-radius: 3px;
   border: 1px solid #e2e8f0;
 }
 
 /* ======================================================
-   PRODUCTS TABLE
+   PRODUCTS TABLE - Compact Professional
 ====================================================== */
 .invoice-table-wrapper {
-  padding: 0 24px;
+  padding: 0 32px;
   margin: 12px 0;
-  overflow-x: auto;
 }
 
 .invoice-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 10px;
+  font-size: 11px;
   border: 1px solid #e2e8f0;
-  border-radius: 8px;
+  border-radius: 6px;
   overflow: hidden;
 }
 
@@ -252,7 +238,7 @@
 
 .invoice-table th {
   padding: 8px 10px;
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -263,8 +249,7 @@
   border-right: none;
 }
 
-.invoice-table th.text-right,
-.invoice-table td.text-right {
+.invoice-table th.text-right {
   text-align: right;
 }
 
@@ -272,8 +257,18 @@
   padding: 8px 10px;
   border-bottom: 1px solid #f1f5f9;
   vertical-align: top;
-  font-size: 10px;
+  font-size: 11px;
   color: #334155;
+  line-height: 1.3;
+}
+
+.invoice-table td.text-right {
+  text-align: right;
+  font-weight: 500;
+}
+
+.invoice-table tbody tr {
+  transition: background 0.2s ease;
 }
 
 .invoice-table tbody tr:hover {
@@ -284,24 +279,41 @@
   background: #fafbfc;
 }
 
+.invoice-table tbody tr:nth-child(even):hover {
+  background: #f1f5f9;
+}
+
+/* Table description details */
+.invoice-table td p {
+  margin: 1px 0;
+  font-size: 10px;
+  line-height: 1.3;
+}
+
+.invoice-table td strong {
+  color: #1e293b;
+  font-weight: 600;
+}
+
+/* GST amount in table */
 .gst-amount {
   font-weight: 600;
-  font-size: 9px;
-  margin-top: 4px;
+  font-size: 10px;
+  margin-top: 3px;
   color: #059669;
   background: #ecfdf5;
   display: inline-block;
-  padding: 2px 6px;
-  border-radius: 4px;
+  padding: 1px 6px;
+  border-radius: 3px;
 }
 
 /* ======================================================
-   TOTAL BOX
+   TOTAL BOX - Compact Premium
 ====================================================== */
 .total-wrapper {
-  padding: 12px 24px;
+  padding: 12px 32px;
   background: linear-gradient(135deg, #f0f4ff 0%, #ffffff 100%);
-  border-top: 1px solid #e2e8f0;
+  border-top: 2px solid #e2e8f0;
 }
 
 .total-box {
@@ -311,12 +323,7 @@
   border: 2px solid #1e40af;
   border-radius: 8px;
   padding: 12px 16px;
-}
-
-@media (max-width: 600px) {
-  .total-box {
-    width: 100%;
-  }
+  box-shadow: 0 4px 12px rgba(30, 64, 175, 0.1);
 }
 
 .total-row {
@@ -324,7 +331,7 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 6px;
-  font-size: 11px;
+  font-size: 12px;
   color: #475569;
 }
 
@@ -341,7 +348,7 @@
   margin-top: 8px;
   padding-top: 8px;
   border-top: 2px dashed #cbd5e1;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 700;
   color: #1e40af;
   display: flex;
@@ -350,77 +357,105 @@
 }
 
 .total-grand span:first-child {
-  font-size: 13px;
+  font-size: 14px;
   color: #475569;
 }
 
+/* Payment mode badge */
 .payment-mode-badge {
   display: inline-block;
   padding: 3px 10px;
   background: #dbeafe;
   color: #1e40af;
   border-radius: 20px;
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 600;
   letter-spacing: 0.5px;
   text-transform: uppercase;
-  margin-bottom: 10px;
+  border: 1px solid #bfdbfe;
 }
 
 /* ======================================================
-   WARRANTY BOX
+   WARRANTY BOX - Compact Professional
 ====================================================== */
 .warranty-box {
-  margin: 12px 24px;
+  margin: 10px 32px;
   border: 1px solid #e2e8f0;
-  border-radius: 8px;
+  border-radius: 6px;
   background: #fffbeb;
   padding: 12px;
   border-left: 4px solid #f59e0b;
 }
 
 .warranty-title {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   color: #92400e;
   margin: 0 0 8px 0;
   padding-bottom: 6px;
   border-bottom: 1px solid #fde68a;
   text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .warranty-content {
   line-height: 1.5;
   color: #78350f;
-  font-size: 10px;
-  white-space: pre-line;
+  font-size: 11px;
+}
+
+.warranty-content p {
+  margin: 3px 0;
+  font-size: 11px;
+  color: #78350f;
+  line-height: 1.4;
+}
+
+.warranty-content strong {
+  color: #92400e;
+  font-weight: 700;
 }
 
 /* ======================================================
-   FOOTER
+   CONTENT AREA - Flex grow to push signature down
+====================================================== */
+.invoice-content {
+  flex: 1;
+}
+
+/* ======================================================
+   FOOTER - Compact Professional
 ====================================================== */
 .invoice-footer {
-  padding: 12px 24px;
+  padding: 10px 32px;
   text-align: center;
   background: #f8fafc;
   border-top: 1px solid #e2e8f0;
+  margin-top: auto;
 }
 
 .invoice-footer-text {
   color: #64748b;
-  font-size: 10px;
+  font-size: 11px;
   margin: 4px 0;
+  line-height: 1.4;
+}
+
+.invoice-footer-text strong {
+  color: #1e293b;
+  font-weight: 600;
 }
 
 /* ======================================================
-   SIGNATURE
+   SIGNATURE - At Bottom
 ====================================================== */
 .signature-area {
   display: flex;
   justify-content: flex-end;
-  padding: 16px 24px 24px;
+  padding: 16px 32px 24px;
   background: #ffffff;
   border-top: 1px solid #e2e8f0;
+  margin-top: auto;
 }
 
 .signature-box {
@@ -428,94 +463,339 @@
   text-align: center;
 }
 
+.signature-stamp {
+  border: 2px solid #1e40af;
+  color: #1e40af;
+  font-weight: 700;
+  font-size: 9px;
+  text-transform: uppercase;
+  padding: 6px 10px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  transform: rotate(-5deg);
+  opacity: 0.8;
+  letter-spacing: 2px;
+  display: inline-block;
+}
+
 .signature-line {
   border-top: 1px solid #94a3b8;
   padding-top: 8px;
   font-weight: 600;
   color: #475569;
-  font-size: 10px;
-  margin-top: 16px;
+  font-size: 11px;
+  margin-top: 20px;
 }
 
 .signature-name {
-  font-size: 9px;
+  font-size: 10px;
   color: #64748b;
   margin-top: 4px;
 }
 
 /* ======================================================
-   RESPONSIVE FOR MOBILE
+   WATERMARK (Subtle)
 ====================================================== */
-@media (max-width: 640px) {
+.watermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-30deg);
+  font-size: 100px;
+  font-weight: 900;
+  color: rgba(30, 64, 175, 0.03);
+  pointer-events: none;
+  white-space: nowrap;
+  letter-spacing: 20px;
+  z-index: 0;
+}
+
+/* ======================================================
+   MOBILE RESPONSIVE
+====================================================== */
+@media (max-width: 768px) {
+  .details-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .bike-specs-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .total-box {
+    width: 100%;
+  }
+
+  .print-container {
+    border-radius: 0;
+    box-shadow: none;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+  }
+
+  #bill-preview {
+    width: 100%;
+    min-height: auto;
+  }
+
   .invoice-header {
-    padding: 15px;
+    padding: 14px;
   }
   
   .details-section,
-  .total-wrapper,
-  .invoice-footer {
-    padding: 12px 15px;
+  .total-wrapper {
+    padding: 12px 14px;
   }
   
   .bike-specs,
   .warranty-box {
-    margin: 10px 15px;
-    padding: 10px;
+    margin: 8px 14px;
   }
   
   .invoice-table-wrapper {
-    padding: 0 15px;
+    padding: 0 14px;
   }
   
   .signature-area {
-    padding: 12px 15px 20px;
+    padding: 12px 14px 20px;
   }
   
-  .details-grid {
-    gap: 10px;
+  .invoice-footer {
+    padding: 8px 14px;
   }
   
-  .invoice-company {
-    font-size: 18px;
-  }
-  
-  .bike-specs-grid {
-    gap: 6px;
-  }
-  
-  .spec-item {
-    padding: 4px 8px;
-  }
-  
-  .spec-value {
-    font-size: 9px;
-    padding: 1px 6px;
+  .signature-box {
+    width: 160px;
   }
 }
 
-/* Print specific fixes */
+/* ======================================================
+   PRINT STYLES
+====================================================== */
 @media print {
   body {
-    width: 210mm !important;
-    height: 297mm !important;
+    background: white !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
-  
-  .print-container,
+
+  .no-print {
+    display: none !important;
+  }
+
+  .print-container {
+    width: 210mm !important;
+    max-width: 210mm !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    page-break-after: avoid !important;
+  }
+
   #bill-preview {
     width: 210mm !important;
     max-width: 210mm !important;
-    margin: 0 auto !important;
+    min-height: 297mm !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    page-break-after: avoid !important;
   }
-  
-  .invoice-header,
-  .details-section,
-  .bike-specs,
-  .invoice-table-wrapper,
-  .total-wrapper,
-  .warranty-box,
-  .invoice-footer,
-  .signature-area {
-    padding-left: 15px !important;
-    padding-right: 15px !important;
+
+  @page {
+    size: A4;
+    margin: 0;
   }
+}
+
+/* =========================================================
+   DASHBOARD STATS CARD (Preserved)
+========================================================= */
+.stat-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  background: white;
+  padding: 24px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 128px;
+  height: 128px;
+  background: linear-gradient(to bottom right, #dbeafe, transparent);
+  margin-right: -64px;
+  margin-top: -64px;
+  opacity: 0.5;
+}
+
+.stat-card-icon {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  opacity: 0.1;
+  transform: translate(-16px, -16px);
+}
+
+.stat-card-icon svg {
+  width: 96px;
+  height: 96px;
+}
+
+/* =========================================================
+   BILL FORM (Preserved)
+========================================================= */
+.bill-form-section {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  padding: 24px;
+  margin-bottom: 24px;
+  transition: all 0.3s ease;
+}
+
+.bill-form-section:hover {
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.bill-form-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #1e40af;
+}
+
+.product-row {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  transition: all 0.2s ease;
+}
+
+.product-row:hover {
+  border-color: #93c5fd;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* =========================================================
+   CUSTOMER CARD (Preserved)
+========================================================= */
+.customer-card {
+  background: linear-gradient(to right, #dbeafe, #f0fdf4);
+  border-radius: 12px;
+  padding: 16px;
+  border: 1px solid #bfdbfe;
+}
+
+/* =========================================================
+   PAYMENT METHOD (Preserved)
+========================================================= */
+.payment-method {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.payment-method-selected {
+  border-color: #1e40af;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transform: scale(1.05);
+}
+
+.payment-method-unselected {
+  border-color: #e2e8f0;
+}
+
+.payment-method-unselected:hover {
+  border-color: #93c5fd;
+  background: #f8fafc;
+}
+
+/* =========================================================
+   BILLS TABLE RESPONSIVE (Preserved)
+========================================================= */
+.bills-table-responsive {
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .bills-table-responsive thead {
+    display: none;
+  }
+
+  .bills-table-responsive table,
+  .bills-table-responsive tbody,
+  .bills-table-responsive tr,
+  .bills-table-responsive td {
+    display: block;
+    width: 100%;
+  }
+
+  .bills-table-responsive tr {
+    background: white;
+    margin-bottom: 15px;
+    border-radius: 12px;
+    padding: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  }
+
+  .bills-table-responsive td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: none;
+    padding: 8px 0;
+    font-size: 13px;
+  }
+}
+
+/* =========================================================
+   ANIMATIONS (Preserved)
+========================================================= */
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(30, 64, 175, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(30, 64, 175, 0.4);
+  }
+}
+
+.glow-effect {
+  animation: glow 2s ease-in-out infinite;
+}
+
+@keyframes checkmark {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.checkmark-animation {
+  animation: checkmark 0.5s ease-out;
 }
