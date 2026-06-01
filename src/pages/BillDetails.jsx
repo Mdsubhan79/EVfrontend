@@ -300,10 +300,7 @@ export default function BillDetails() {
                     <span className="spec-label">Wheel</span>
                     <span className="spec-value">{product.wheelSize || 'N/A'}</span>
                   </div>
-                  <div className="spec-item">
-                    <span className="spec-label">Chassis</span>
-                    <span className="spec-value">{product.chassisNumber || 'N/A'}</span>
-                  </div>
+                  
                 </div>
               ))}
             </div>
@@ -327,8 +324,19 @@ export default function BillDetails() {
                       <td>
                         <p>{product.description}</p>
                         <p><strong>Motor No:</strong> {product.motorNumber || 'N/A'}</p>
-                        <span className="gst-amount">GST: ₹{product.gstAmount || 0}</span>
+                        
+                        <p><strong>Chassis No:</strong> {product.chassisNumber || 'N/A'}</p>
+                        <span className="gst-amount">
+                          GST: ₹{Number(product.gstAmount || 0).toLocaleString(
+                            'en-IN',
+                            {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2
+                            }
+                          )}
+                        </span>
                       </td>
+                      
                       <td className="text-right">{product.quantity || 1}</td>
                       <td className="text-right">₹{product.unitPrice?.toLocaleString() || 0}</td>
                       <td className="text-right font-semibold">₹{product.totalPrice?.toLocaleString() || 0}</td>

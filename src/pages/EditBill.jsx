@@ -262,11 +262,7 @@ export default function EditBill() {
     setSaving(true);
 
     // Prepare warranty text
-    const warrantyText = `Warranty:
-- Motor, Controller & Charger: ${specialInstructions.motorWarranty}
-- Battery: ${specialInstructions.batteryWarranty}
-
-${specialInstructions.otherComments}`;
+   const warrantyText = specialInstructions.otherComments;
 
     // Recalculate final totals before saving
     let grandTotal = 0;
@@ -289,9 +285,10 @@ ${specialInstructions.otherComments}`;
       })),
       paymentMode,
       specialInstructions: {
-        ...specialInstructions,
-        otherComments: warrantyText,
-      },
+  motorWarranty: specialInstructions.motorWarranty,
+  batteryWarranty: specialInstructions.batteryWarranty,
+  otherComments: specialInstructions.otherComments,
+},
       subTotal: subTotal,
       gstTotal: gstTotal,
       grandTotal: grandTotal,
