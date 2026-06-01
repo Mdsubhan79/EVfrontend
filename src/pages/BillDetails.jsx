@@ -8,7 +8,7 @@ import {
   PencilIcon, 
   DocumentArrowDownIcon, 
   ChatBubbleLeftRightIcon, 
-  PrinterIcon
+  PrinterIcon 
 } from '@heroicons/react/24/outline';
 
 export default function BillDetails() {
@@ -53,22 +53,18 @@ export default function BillDetails() {
 
       const loadingToast = toast.loading('Generating PDF...');
 
-      // Clone the element for PDF generation
       const clone = input.cloneNode(true);
       clone.style.width = '794px';
       clone.style.maxWidth = '794px';
       clone.style.minHeight = '1123px';
-      clone.style.maxHeight = '1123px';
       clone.style.overflow = 'hidden';
-      clone.style.position = 'relative';
+      clone.style.position = 'absolute';
+      clone.style.left = '-9999px';
+      clone.style.top = '0';
       clone.style.margin = '0';
       clone.style.boxShadow = 'none';
       clone.style.borderRadius = '0';
       
-      // Temporarily add clone to body (hidden)
-      clone.style.position = 'absolute';
-      clone.style.left = '-9999px';
-      clone.style.top = '0';
       document.body.appendChild(clone);
 
       await new Promise(resolve => setTimeout(resolve, 300));
@@ -85,10 +81,8 @@ export default function BillDetails() {
         windowHeight: clone.scrollHeight,
       });
 
-      // Remove clone
       document.body.removeChild(clone);
 
-      // Create PDF
       const pdf = new jsPDF({
         orientation: 'portrait',
         unit: 'mm',
@@ -99,10 +93,8 @@ export default function BillDetails() {
       const pdfWidth = 210;
       const pdfHeight = 297;
       
-      // Calculate image height to fit A4
       const imgHeight = (canvas.height * pdfWidth) / canvas.width;
       
-      // If content fits on one page
       if (imgHeight <= pdfHeight) {
         pdf.addImage(
           canvas.toDataURL('image/png', 1.0),
@@ -115,7 +107,6 @@ export default function BillDetails() {
           'FAST'
         );
       } else {
-        // Scale to fit single page
         const scale = pdfHeight / imgHeight;
         const scaledWidth = pdfWidth * scale;
         const xOffset = (pdfWidth - scaledWidth) / 2;
@@ -215,180 +206,184 @@ export default function BillDetails() {
           </button>
         </div>
         
-        {/* Invoice - No fixed height constraint on screen */}
+        {/* Invoice - Flexbox column to push signature to bottom */}
         <div id="bill-preview" className="print-container bg-white w-full max-w-[794px] mx-auto relative">
-        
+          {/* Watermark */}
+          <div className="watermark">INVOICE</div>
           
-          {/* Header */}
-          <div className="invoice-header">
-            <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
-              <div className="flex items-center gap-4">
-                {business?.logo && (
-                  <div className="flex-shrink-0">
-                    <img
-                      src={business.logo}
-                      alt="Logo"
-                      crossOrigin="anonymous"
-                      className="w-14 h-14 sm:w-16 sm:h-16 object-contain border border-gray-200 rounded-lg p-1"
-                    />
+          {/* Main Content Area */}
+          <div className="invoice-content" style={{position: 'relative', zIndex: 1}}>
+            {/* Header */}
+            <div className="invoice-header">
+              <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
+                <div className="flex items-center gap-4">
+                  {business?.logo && (
+                    <div className="flex-shrink-0">
+                      <img
+                        src={business.logo}
+                        alt="Logo"
+                        crossOrigin="anonymous"
+                        className="w-14 h-14 sm:w-16 sm:h-16 object-contain border border-gray-200 rounded-lg p-1"
+                      />
+                    </div>
+                  )}
+                  <div>
+                    <h1 className="invoice-company">{business?.businessName || 'Company'}</h1>
+                    <p className="invoice-tagline">{business?.tagline || 'Trusted EV Partner'}</p>
                   </div>
-                )}
-                <div>
-                  <h1 className="invoice-company">{business?.businessName || 'Company'}</h1>
-                  <p className="invoice-tagline">{business?.tagline || 'Trusted EV Partner'}</p>
                 </div>
-              </div>
-              <div className="invoice-number">
-                
-                <p>No: <strong>{bill.invoiceNumber}</strong></p>
-                <p>Date: <strong>{new Date(bill.createdAt).toLocaleDateString('en-IN', { 
-                  year: 'numeric', month: 'short', day: 'numeric' 
-                })}</strong></p>
+                <div className="invoice-number">
+                  
+                  <p>No: <strong>{bill.invoiceNumber}</strong></p>
+                  <p>Date: <strong>{new Date(bill.createdAt).toLocaleDateString('en-IN', { 
+                    year: 'numeric', month: 'short', day: 'numeric' 
+                  })}</strong></p>
+                </div>
               </div>
             </div>
-          </div>
-          
-          {/* Business & Customer */}
-          <div className="details-section">
-            <div className="details-grid">
-              <div className="details-card">
-                <h3>🏢 Business Details</h3>
-                <p><strong>Address:</strong> {business?.address || 'N/A'}</p>
-                <p><strong>GSTIN:</strong> {business?.gstinNumber || 'N/A'}</p>
-                <p><strong>Phone:</strong> {business?.phone || 'N/A'}</p>
-                {business?.email && <p><strong>Email:</strong> {business.email}</p>}
-              </div>
-              <div className="details-card">
-                <h3>👤 Customer Details</h3>
-                <p><strong>Name:</strong> {bill.customerDetails.name}</p>
-                <p><strong>Phone:</strong> {bill.customerDetails.phoneNumber}</p>
-                <p><strong>Aadhar:</strong> {bill.customerDetails.aadharNumber || 'N/A'}</p>
-                {bill.customerDetails.address && (
-                  <p><strong>Address:</strong> {bill.customerDetails.address}</p>
-                )}
+            
+            {/* Business & Customer */}
+            <div className="details-section">
+              <div className="details-grid">
+                <div className="details-card">
+                  <h3>🏢 Business Details</h3>
+                  <p><strong>Address:</strong> {business?.address || 'N/A'}</p>
+                  <p><strong>GSTIN:</strong> {business?.gstinNumber || 'N/A'}</p>
+                  <p><strong>Phone:</strong> {business?.phone || 'N/A'}</p>
+                  {business?.email && <p><strong>Email:</strong> {business.email}</p>}
+                </div>
+                <div className="details-card">
+                  <h3>👤 Customer Details</h3>
+                  <p><strong>Name:</strong> {bill.customerDetails.name}</p>
+                  <p><strong>Phone:</strong> {bill.customerDetails.phoneNumber}</p>
+                  <p><strong>Aadhar:</strong> {bill.customerDetails.aadharNumber || 'N/A'}</p>
+                  {bill.customerDetails.address && (
+                    <p><strong>Address:</strong> {bill.customerDetails.address}</p>
+                  )}
+                </div>
               </div>
             </div>
-          </div>
-          
-          {/* Bike Specs */}
-          <div className="bike-specs">
-            <h3 className="bike-specs-title">🔧 Vehicle Specifications</h3>
-            {bill.products.map((product, index) => (
-              <div key={index} className="bike-specs-grid">
-                <div className="spec-item">
-                  <span className="spec-label">Model</span>
-                  <span className="spec-value">{product.model || 'N/A'}</span>
+            
+            {/* Bike Specs */}
+            <div className="bike-specs">
+              <h3 className="bike-specs-title">🔧 Vehicle Specifications</h3>
+              {bill.products.map((product, index) => (
+                <div key={index} className="bike-specs-grid">
+                  <div className="spec-item">
+                    <span className="spec-label">Model</span>
+                    <span className="spec-value">{product.model || 'N/A'}</span>
+                  </div>
+                  <div className="spec-item">
+                    <span className="spec-label">Color</span>
+                    <span className="spec-value">{product.color || 'N/A'}</span>
+                  </div>
+                  <div className="spec-item">
+                    <span className="spec-label">Battery</span>
+                    <span className="spec-value">{product.batteryType || 'N/A'}</span>
+                  </div>
+                  <div className="spec-item">
+                    <span className="spec-label">Motor</span>
+                    <span className="spec-value">{product.motorPower || 'N/A'}</span>
+                  </div>
+                  <div className="spec-item">
+                    <span className="spec-label">Range</span>
+                    <span className="spec-value">{product.range || 'N/A'}</span>
+                  </div>
+                  <div className="spec-item">
+                    <span className="spec-label">Speed</span>
+                    <span className="spec-value">{product.topSpeed || 'N/A'}</span>
+                  </div>
+                  <div className="spec-item">
+                    <span className="spec-label">Charge</span>
+                    <span className="spec-value">{product.chargingTime || 'N/A'}</span>
+                  </div>
+                  <div className="spec-item">
+                    <span className="spec-label">Wheel</span>
+                    <span className="spec-value">{product.wheelSize || 'N/A'}</span>
+                  </div>
+                  <div className="spec-item">
+                    <span className="spec-label">Chassis</span>
+                    <span className="spec-value">{product.chassisNumber || 'N/A'}</span>
+                  </div>
                 </div>
-                <div className="spec-item">
-                  <span className="spec-label">Color</span>
-                  <span className="spec-value">{product.color || 'N/A'}</span>
-                </div>
-                <div className="spec-item">
-                  <span className="spec-label">Battery</span>
-                  <span className="spec-value">{product.batteryType || 'N/A'}</span>
-                </div>
-                <div className="spec-item">
-                  <span className="spec-label">Motor</span>
-                  <span className="spec-value">{product.motorPower || 'N/A'}</span>
-                </div>
-                <div className="spec-item">
-                  <span className="spec-label">Range</span>
-                  <span className="spec-value">{product.range || 'N/A'}</span>
-                </div>
-                <div className="spec-item">
-                  <span className="spec-label">Speed</span>
-                  <span className="spec-value">{product.topSpeed || 'N/A'}</span>
-                </div>
-                <div className="spec-item">
-                  <span className="spec-label">Charge</span>
-                  <span className="spec-value">{product.chargingTime || 'N/A'}</span>
-                </div>
-                <div className="spec-item">
-                  <span className="spec-label">Wheel</span>
-                  <span className="spec-value">{product.wheelSize || 'N/A'}</span>
-                </div>
-                <div className="spec-item">
-                  <span className="spec-label">Chassis</span>
-                  <span className="spec-value">{product.chassisNumber || 'N/A'}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-          
-          {/* Products Table */}
-          <div className="invoice-table-wrapper">
-            <table className="invoice-table">
-              <thead>
-                <tr>
-                  <th>Item</th>
-                  <th>Description</th>
-                  <th className="text-right">Qty</th>
-                  <th className="text-right">Price</th>
-                  <th className="text-right">Amount</th>
-                </tr>
-              </thead>
-              <tbody>
-                {bill.products.map((product, index) => (
-                  <tr key={index}>
-                    <td className="font-semibold">{product.name}</td>
-                    <td>
-                      <p>{product.description}</p>
-                      <p><strong>Motor No:</strong> {product.motorNumber || 'N/A'}</p>
-                      <span className="gst-amount">GST: ₹{product.gstAmount || 0}</span>
-                    </td>
-                    <td className="text-right">{product.quantity || 1}</td>
-                    <td className="text-right">₹{product.unitPrice?.toLocaleString() || 0}</td>
-                    <td className="text-right font-semibold">₹{product.totalPrice?.toLocaleString() || 0}</td>
+              ))}
+            </div>
+            
+            {/* Products Table */}
+            <div className="invoice-table-wrapper">
+              <table className="invoice-table">
+                <thead>
+                  <tr>
+                    <th>Item</th>
+                    <th>Description</th>
+                    <th className="text-right">Qty</th>
+                    <th className="text-right">Price</th>
+                    <th className="text-right">Amount</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          
-          {/* Totals */}
-          <div className="total-wrapper">
-            <div className="total-box">
-              <span className="payment-mode-badge">
-                💳 {bill.paymentMode?.replace('_', ' ').toUpperCase() || 'CASH'}
-              </span>
-              <div className="total-row" style={{marginTop: '10px'}}>
-                <span>Subtotal</span>
-                <span>₹{bill.subTotal?.toLocaleString() || 0}</span>
-              </div>
-              <div className="total-row">
-                <span>GST ({business?.gstRate || 0}%)</span>
-                <span>₹{bill.gstTotal?.toLocaleString() || 0}</span>
-              </div>
-              <div className="total-grand">
-                <span>TOTAL</span>
-                <span>₹{bill.grandTotal?.toLocaleString() || 0}</span>
+                </thead>
+                <tbody>
+                  {bill.products.map((product, index) => (
+                    <tr key={index}>
+                      <td className="font-semibold">{product.name}</td>
+                      <td>
+                        <p>{product.description}</p>
+                        <p><strong>Motor No:</strong> {product.motorNumber || 'N/A'}</p>
+                        <span className="gst-amount">GST: ₹{product.gstAmount || 0}</span>
+                      </td>
+                      <td className="text-right">{product.quantity || 1}</td>
+                      <td className="text-right">₹{product.unitPrice?.toLocaleString() || 0}</td>
+                      <td className="text-right font-semibold">₹{product.totalPrice?.toLocaleString() || 0}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            
+            {/* Totals */}
+            <div className="total-wrapper">
+              <div className="total-box">
+                <span className="payment-mode-badge">
+                  💳 {bill.paymentMode?.replace('_', ' ').toUpperCase() || 'CASH'}
+                </span>
+                <div className="total-row" style={{marginTop: '10px'}}>
+                  <span>Subtotal</span>
+                  <span>₹{bill.subTotal?.toLocaleString() || 0}</span>
+                </div>
+                <div className="total-row">
+                  <span>GST ({business?.gstRate || 0}%)</span>
+                  <span>₹{bill.gstTotal?.toLocaleString() || 0}</span>
+                </div>
+                <div className="total-grand">
+                  <span>TOTAL</span>
+                  <span>₹{bill.grandTotal?.toLocaleString() || 0}</span>
+                </div>
               </div>
             </div>
-          </div>
-          
-          {/* Warranty - Now visible */}
-          <div className="warranty-box">
-            <h3 className="warranty-title"> Warranty Information</h3>
-            <div className="warranty-content whitespace-pre-line">
-              {bill.specialInstructions?.otherComments || 
-               '• Motor, Controller & Charger: 12 Months Warranty\n• Battery: 12 Months Warranty\n\nIf you have any questions about this invoice, please contact the above given numbers.'}
+            
+            {/* Warranty */}
+            <div className="warranty-box">
+              <h3 className="warranty-title">Warranty Information</h3>
+              <div className="warranty-content whitespace-pre-line">
+                {bill.specialInstructions?.otherComments || 
+                 '• Motor, Controller & Charger: 12 Months Warranty\n• Battery: 12 Months Warranty\n\nIf you have any questions about this invoice, please contact the above given numbers.'}
+              </div>
             </div>
-          </div>
 
-          {/* Footer */}
-          <div className="invoice-footer">
-            <p className="invoice-footer-text">
-              If you have any questions about this invoice, please contact us at {business?.phone || 'N/A'}
-            </p>
-            <p className="invoice-footer-text" style={{fontWeight: '600', color: '#1e293b'}}>
-              Thank you! 
-            </p>
+            {/* Footer Text */}
+            <div className="invoice-footer">
+              <p className="invoice-footer-text">
+                If you have any questions about this invoice, please contact us at {business?.phone || 'N/A'}
+              </p>
+              <p className="invoice-footer-text" style={{fontWeight: '600', color: '#1e293b'}}>
+                Thank you!
+              </p>
+            </div>
           </div>
           
-          {/* Signature - Now visible */}
+          {/* Signature - Pushed to Bottom */}
           <div className="signature-area">
             <div className="signature-box">
-              
+              <div className="signature-stamp">AUTHORIZED</div>
               <div className="signature-line">Authorized Signatory</div>
               <p className="signature-name">{business?.businessName || 'Company'}</p>
             </div>
