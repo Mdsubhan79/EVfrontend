@@ -8,9 +8,7 @@ import {
   PencilIcon, 
   DocumentArrowDownIcon, 
   ChatBubbleLeftRightIcon, 
-  PrinterIcon,
-  PhoneIcon,
-  EnvelopeIcon
+  PrinterIcon
 } from '@heroicons/react/24/outline';
 
 export default function BillDetails() {
@@ -53,57 +51,44 @@ export default function BillDetails() {
         return;
       }
 
-      const loadingToast = toast.loading('Generating professional PDF...');
+      const loadingToast = toast.loading('Generating PDF...');
 
-      // Store original styles
-      const originalStyles = {
-        width: input.style.width,
-        maxWidth: input.style.maxWidth,
-        minHeight: input.style.minHeight,
-        maxHeight: input.style.maxHeight,
-        overflow: input.style.overflow,
-        transform: input.style.transform,
-        zoom: input.style.zoom
-      };
+      // Clone the element for PDF generation
+      const clone = input.cloneNode(true);
+      clone.style.width = '794px';
+      clone.style.maxWidth = '794px';
+      clone.style.minHeight = '1123px';
+      clone.style.maxHeight = '1123px';
+      clone.style.overflow = 'hidden';
+      clone.style.position = 'relative';
+      clone.style.margin = '0';
+      clone.style.boxShadow = 'none';
+      clone.style.borderRadius = '0';
+      
+      // Temporarily add clone to body (hidden)
+      clone.style.position = 'absolute';
+      clone.style.left = '-9999px';
+      clone.style.top = '0';
+      document.body.appendChild(clone);
 
-      // Force exact A4 dimensions
-      input.style.width = '794px';
-      input.style.maxWidth = '794px';
-      input.style.minHeight = '1123px';
-      input.style.maxHeight = '1123px';
-      input.style.overflow = 'hidden';
-      input.style.transform = 'none';
-      input.style.zoom = '1';
+      await new Promise(resolve => setTimeout(resolve, 300));
 
-      await new Promise(resolve => setTimeout(resolve, 200));
-
-      const canvas = await html2canvas(input, {
+      const canvas = await html2canvas(clone, {
         scale: 2,
         useCORS: true,
         allowTaint: true,
         logging: false,
         backgroundColor: '#ffffff',
         width: 794,
-        height: 1123,
+        height: clone.scrollHeight,
         windowWidth: 794,
-        windowHeight: 1123,
-        onclone: (clonedDoc) => {
-          const clonedElement = clonedDoc.getElementById('bill-preview');
-          if (clonedElement) {
-            clonedElement.style.width = '794px';
-            clonedElement.style.maxWidth = '794px';
-            clonedElement.style.minHeight = '1123px';
-            clonedElement.style.maxHeight = '1123px';
-            clonedElement.style.overflow = 'hidden';
-            clonedElement.style.transform = 'none';
-            clonedElement.style.zoom = '1';
-          }
-        }
+        windowHeight: clone.scrollHeight,
       });
 
-      // Restore original styles
-      Object.assign(input.style, originalStyles);
+      // Remove clone
+      document.body.removeChild(clone);
 
+      // Create PDF
       const pdf = new jsPDF({
         orientation: 'portrait',
         unit: 'mm',
@@ -113,30 +98,51 @@ export default function BillDetails() {
 
       const pdfWidth = 210;
       const pdfHeight = 297;
-
-      pdf.addImage(
-        canvas.toDataURL('image/png', 1.0),
-        'PNG',
-        0,
-        0,
-        pdfWidth,
-        pdfHeight,
-        undefined,
-        'FAST'
-      );
+      
+      // Calculate image height to fit A4
+      const imgHeight = (canvas.height * pdfWidth) / canvas.width;
+      
+      // If content fits on one page
+      if (imgHeight <= pdfHeight) {
+        pdf.addImage(
+          canvas.toDataURL('image/png', 1.0),
+          'PNG',
+          0,
+          0,
+          pdfWidth,
+          imgHeight,
+          undefined,
+          'FAST'
+        );
+      } else {
+        // Scale to fit single page
+        const scale = pdfHeight / imgHeight;
+        const scaledWidth = pdfWidth * scale;
+        const xOffset = (pdfWidth - scaledWidth) / 2;
+        
+        pdf.addImage(
+          canvas.toDataURL('image/png', 1.0),
+          'PNG',
+          xOffset,
+          0,
+          scaledWidth,
+          pdfHeight,
+          undefined,
+          'FAST'
+        );
+      }
 
       const customerName = bill?.customerDetails?.name || 'Customer';
       const invoiceNumber = bill?.invoiceNumber || 'Invoice';
       const sanitizedName = customerName.replace(/[^a-zA-Z0-9]/g, '_');
-      const filename = `Invoice_${sanitizedName}_${invoiceNumber}.pdf`;
-
-      pdf.save(filename);
+      
+      pdf.save(`Invoice_${sanitizedName}_${invoiceNumber}.pdf`);
       
       toast.dismiss(loadingToast);
-      toast.success('PDF downloaded successfully!');
+      toast.success('PDF downloaded!');
 
     } catch (error) {
-      console.error('PDF Generation Error:', error);
+      console.error('PDF Error:', error);
       toast.error('Failed to download PDF');
     }
   };
@@ -154,11 +160,9 @@ export default function BillDetails() {
                  `💰 Total Amount: *₹${bill?.grandTotal}*\n` +
                  `📅 Date: ${new Date(bill?.createdAt).toLocaleDateString()}\n\n` +
                  `Thank you for your purchase! 🙏\n\n` +
-                 `For any queries, contact:\n` +
-                 `📞 ${business?.phone || 'N/A'}`;
+                 `For queries: 📞 ${business?.phone || 'N/A'}`;
     
-    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(text)}`;
-    window.open(whatsappUrl, '_blank');
+    window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(text)}`, '_blank');
     toast.success('WhatsApp opened');
   };
   
@@ -176,7 +180,7 @@ export default function BillDetails() {
   return (
     <div className="min-h-screen bg-gray-200 py-6 px-4 sm:px-6 lg:px-8">
       <div className="max-w-5xl mx-auto">
-        {/* Action Buttons - Professional Style */}
+        {/* Action Buttons */}
         <div className="flex flex-wrap justify-end gap-3 mb-6 no-print">
           <button
             onClick={() => navigate(`/edit-bill/${id}`)}
@@ -191,7 +195,7 @@ export default function BillDetails() {
             className="flex items-center gap-2 px-4 py-2.5 bg-green-600 text-white rounded-lg shadow-sm hover:shadow-md hover:bg-green-700 transition-all duration-200 font-medium text-sm"
           >
             <ChatBubbleLeftRightIcon className="h-4 w-4" />
-            Send WhatsApp
+            WhatsApp
           </button>
           
           <button
@@ -211,9 +215,9 @@ export default function BillDetails() {
           </button>
         </div>
         
-        {/* Professional Invoice */}
-        <div id="bill-preview" className="print-container bg-white w-full max-w-[794px] mx-auto overflow-hidden relative">
-          {/* Subtle Watermark */}
+        {/* Invoice - No fixed height constraint on screen */}
+        <div id="bill-preview" className="print-container bg-white w-full max-w-[794px] mx-auto relative">
+          {/* Watermark */}
           <div className="watermark">INVOICE</div>
           
           {/* Header */}
@@ -224,30 +228,28 @@ export default function BillDetails() {
                   <div className="flex-shrink-0">
                     <img
                       src={business.logo}
-                      alt="Company Logo"
+                      alt="Logo"
                       crossOrigin="anonymous"
-                      className="w-16 h-16 sm:w-20 sm:h-20 object-contain border border-gray-200 rounded-lg p-1"
+                      className="w-14 h-14 sm:w-16 sm:h-16 object-contain border border-gray-200 rounded-lg p-1"
                     />
                   </div>
                 )}
                 <div>
-                  <h1 className="invoice-company">{business?.businessName || 'Company Name'}</h1>
-                  <p className="invoice-tagline">{business?.tagline || 'Your trusted EV partner'}</p>
+                  <h1 className="invoice-company">{business?.businessName || 'Company'}</h1>
+                  <p className="invoice-tagline">{business?.tagline || 'Trusted EV Partner'}</p>
                 </div>
               </div>
               <div className="invoice-number">
                 <p><strong>TAX INVOICE</strong></p>
-                <p>Invoice #: <strong>{bill.invoiceNumber}</strong></p>
+                <p>No: <strong>{bill.invoiceNumber}</strong></p>
                 <p>Date: <strong>{new Date(bill.createdAt).toLocaleDateString('en-IN', { 
-                  year: 'numeric', 
-                  month: 'long', 
-                  day: 'numeric' 
+                  year: 'numeric', month: 'short', day: 'numeric' 
                 })}</strong></p>
               </div>
             </div>
           </div>
           
-          {/* Business & Customer Info */}
+          {/* Business & Customer */}
           <div className="details-section">
             <div className="details-grid">
               <div className="details-card">
@@ -269,7 +271,7 @@ export default function BillDetails() {
             </div>
           </div>
           
-          {/* Bike Specifications */}
+          {/* Bike Specs */}
           <div className="bike-specs">
             <h3 className="bike-specs-title">🔧 Vehicle Specifications</h3>
             {bill.products.map((product, index) => (
@@ -287,7 +289,7 @@ export default function BillDetails() {
                   <span className="spec-value">{product.batteryType || 'N/A'}</span>
                 </div>
                 <div className="spec-item">
-                  <span className="spec-label">Motor Power</span>
+                  <span className="spec-label">Motor</span>
                   <span className="spec-value">{product.motorPower || 'N/A'}</span>
                 </div>
                 <div className="spec-item">
@@ -295,24 +297,20 @@ export default function BillDetails() {
                   <span className="spec-value">{product.range || 'N/A'}</span>
                 </div>
                 <div className="spec-item">
-                  <span className="spec-label">Top Speed</span>
+                  <span className="spec-label">Speed</span>
                   <span className="spec-value">{product.topSpeed || 'N/A'}</span>
                 </div>
                 <div className="spec-item">
-                  <span className="spec-label">Charging</span>
+                  <span className="spec-label">Charge</span>
                   <span className="spec-value">{product.chargingTime || 'N/A'}</span>
                 </div>
                 <div className="spec-item">
-                  <span className="spec-label">Wheel Size</span>
+                  <span className="spec-label">Wheel</span>
                   <span className="spec-value">{product.wheelSize || 'N/A'}</span>
                 </div>
                 <div className="spec-item">
-                  <span className="spec-label">Chassis No</span>
+                  <span className="spec-label">Chassis</span>
                   <span className="spec-value">{product.chassisNumber || 'N/A'}</span>
-                </div>
-                <div className="spec-item">
-                  <span className="spec-label">Motor No</span>
-                  <span className="spec-value">{product.motorNumber || 'N/A'}</span>
                 </div>
               </div>
             ))}
@@ -323,11 +321,11 @@ export default function BillDetails() {
             <table className="invoice-table">
               <thead>
                 <tr>
-                  <th style={{width: '20%'}}>Item</th>
-                  <th style={{width: '35%'}}>Description</th>
-                  <th className="text-right" style={{width: '10%'}}>Qty</th>
-                  <th className="text-right" style={{width: '15%'}}>Unit Price</th>
-                  <th className="text-right" style={{width: '20%'}}>Amount</th>
+                  <th>Item</th>
+                  <th>Description</th>
+                  <th className="text-right">Qty</th>
+                  <th className="text-right">Price</th>
+                  <th className="text-right">Amount</th>
                 </tr>
               </thead>
               <tbody>
@@ -336,8 +334,7 @@ export default function BillDetails() {
                     <td className="font-semibold">{product.name}</td>
                     <td>
                       <p>{product.description}</p>
-                      <p><strong>Chassis:</strong> {product.chassisNumber || 'N/A'}</p>
-                      <p><strong>Motor:</strong> {product.motorNumber || 'N/A'}</p>
+                      <p><strong>Motor No:</strong> {product.motorNumber || 'N/A'}</p>
                       <span className="gst-amount">GST: ₹{product.gstAmount || 0}</span>
                     </td>
                     <td className="text-right">{product.quantity || 1}</td>
@@ -355,7 +352,7 @@ export default function BillDetails() {
               <span className="payment-mode-badge">
                 💳 {bill.paymentMode?.replace('_', ' ').toUpperCase() || 'CASH'}
               </span>
-              <div className="total-row" style={{marginTop: '12px'}}>
+              <div className="total-row" style={{marginTop: '10px'}}>
                 <span>Subtotal</span>
                 <span>₹{bill.subTotal?.toLocaleString() || 0}</span>
               </div>
@@ -370,36 +367,31 @@ export default function BillDetails() {
             </div>
           </div>
           
-          {/* Warranty */}
+          {/* Warranty - Now visible */}
           <div className="warranty-box">
             <h3 className="warranty-title">🛡️ Warranty Information</h3>
             <div className="warranty-content whitespace-pre-line">
               {bill.specialInstructions?.otherComments || 
-               '• Motor: 12 Months Warranty\n• Controller: 12 Months Warranty\n• Charger: 12 Months Warranty\n• Battery: 12 Months Warranty'}
+               '• Motor, Controller & Charger: 12 Months Warranty\n• Battery: 12 Months Warranty\n\nIf you have any questions about this invoice, please contact the above given numbers.'}
             </div>
           </div>
 
           {/* Footer */}
           <div className="invoice-footer">
             <p className="invoice-footer-text">
-              <strong>📞 For any queries, please contact us at:</strong> {business?.phone || 'N/A'}
+              If you have any questions about this invoice, please contact us at {business?.phone || 'N/A'}
             </p>
-            {business?.email && (
-              <p className="invoice-footer-text">
-                <strong>✉️ Email:</strong> {business.email}
-              </p>
-            )}
-            <p className="invoice-footer-text" style={{marginTop: '8px', fontWeight: '600', color: '#1e293b'}}>
-              Thank you for your business! 🙏
+            <p className="invoice-footer-text" style={{fontWeight: '600', color: '#1e293b'}}>
+              Thank you! 
             </p>
           </div>
           
-          {/* Signature */}
+          {/* Signature - Now visible */}
           <div className="signature-area">
             <div className="signature-box">
               <div className="signature-stamp">AUTHORIZED</div>
               <div className="signature-line">Authorized Signatory</div>
-              <p className="signature-name">{business?.businessName || 'Company Name'}</p>
+              <p className="signature-name">{business?.businessName || 'Company'}</p>
             </div>
           </div>
         </div>
