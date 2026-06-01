@@ -59,33 +59,37 @@ export default function BillDetails() {
       clone.style.maxWidth = '794px';
       clone.style.minHeight = '1123px';
       clone.style.overflow = 'hidden';
-      clone.style.position = 'absolute';
-      clone.style.left = '-9999px';
+      clone.style.position = 'fixed';
+      clone.style.left = '0';
       clone.style.top = '0';
+      clone.style.zIndex = '-9999';
       clone.style.margin = '0';
       clone.style.boxShadow = 'none';
       clone.style.borderRadius = '0';
-      
+      if (window.innerWidth < 768) {
+  clone.style.transform = "scale(1)";
+  clone.style.transformOrigin = "top left";
+}
       document.body.appendChild(clone);
 
       await new Promise(resolve => setTimeout(resolve, 300));
 
-       const canvas = await html2canvas(clone, {
-          scale: 3,
-          useCORS: true,
-          allowTaint: true,
-          backgroundColor: '#ffffff',
-          logging: false,
+          const canvas = await html2canvas(clone, {
+            scale: window.innerWidth < 768 ? 2 : 3,
+            useCORS: true,
+            allowTaint: false,
+            backgroundColor: "#ffffff",
+            logging: false,
 
-          width: 794,
-          height: clone.scrollHeight,
+            width: clone.offsetWidth,
+            height: clone.offsetHeight,
 
-          windowWidth: 1200,
-          windowHeight: clone.scrollHeight,
+            windowWidth: clone.offsetWidth,
+            windowHeight: clone.offsetHeight,
 
-          scrollX: 0,
-          scrollY: 0
-        });
+            scrollX: 0,
+            scrollY: 0
+          });
 
       document.body.removeChild(clone);
 
