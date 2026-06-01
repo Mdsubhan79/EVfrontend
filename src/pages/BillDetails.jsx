@@ -329,8 +329,12 @@ const downloadPDF = async () => {
                         <strong>Motor No:</strong> {product.motorNumber}
                       </p>
 
+                      <div className="font-semibold text-sm mt-1">
+                        GST: ₹{product.gstAmount}
+                      </div>
                       
-
+                      
+                 
 
                     </td>
                      <td className="py-2 text-right">{product.quantity}</td>
