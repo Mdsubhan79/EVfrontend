@@ -208,8 +208,7 @@ export default function BillDetails() {
         
         {/* Invoice - Flexbox column to push signature to bottom */}
         <div id="bill-preview" className="print-container bg-white w-full max-w-[794px] mx-auto relative">
-          {/* Watermark */}
-          <div className="watermark">INVOICE</div>
+          
           
           {/* Main Content Area */}
           <div className="invoice-content" style={{position: 'relative', zIndex: 1}}>
@@ -383,7 +382,7 @@ export default function BillDetails() {
           {/* Signature - Pushed to Bottom */}
           <div className="signature-area">
             <div className="signature-box">
-              <div className="signature-stamp">AUTHORIZED</div>
+              
               <div className="signature-line">Authorized Signatory</div>
               <p className="signature-name">{business?.businessName || 'Company'}</p>
             </div>
