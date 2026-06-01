@@ -217,8 +217,7 @@ export default function BillDetails() {
         
         {/* Invoice - No fixed height constraint on screen */}
         <div id="bill-preview" className="print-container bg-white w-full max-w-[794px] mx-auto relative">
-          {/* Watermark */}
-          <div className="watermark">INVOICE</div>
+        
           
           {/* Header */}
           <div className="invoice-header">
@@ -240,7 +239,7 @@ export default function BillDetails() {
                 </div>
               </div>
               <div className="invoice-number">
-                <p><strong>TAX INVOICE</strong></p>
+                
                 <p>No: <strong>{bill.invoiceNumber}</strong></p>
                 <p>Date: <strong>{new Date(bill.createdAt).toLocaleDateString('en-IN', { 
                   year: 'numeric', month: 'short', day: 'numeric' 
