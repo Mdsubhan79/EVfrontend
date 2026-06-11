@@ -1,148 +1,91 @@
+// src/App.jsx
 import React from 'react';
-
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate
-} from 'react-router-dom';
-
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
-
-import { AuthProvider } from './context/AuthContext.jsx';
-
-import PrivateRoute from './components/PrivateRoute.jsx';
-
-import Login from './pages/Login.jsx';
-import Signup from './pages/Signup.jsx';
-import BusinessDetails from './pages/BusinessDetails.jsx';
-import Dashboard from './pages/Dashboard.jsx';
-import CreateBill from './pages/CreateBill.jsx';
-import BillDetails from './pages/BillDetails.jsx';
-
-import AllBills from './pages/AllBills.jsx'; 
-import EditBill from './pages/EditBill.jsx';
-import LoadingScreen from './components/LoadingScreen';
-import { useAuth } from './context/AuthContext';
-
+import { AuthProvider } from './context/AuthContext';
+import { DataProvider } from './context/DataContext';
+import PrivateRoute from './components/PrivateRoute';
+import AppInitializer from './components/AppInitializer';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import BusinessDetails from './pages/BusinessDetails';
+import Dashboard from './pages/Dashboard';
+import CreateBill from './pages/CreateBill';
+import BillDetails from './pages/BillDetails';
+import AllBills from './pages/AllBills';
+import EditBill from './pages/EditBill';
 import './App.css';
 import './index.css';
 import './styles/invoice.css';
 import './styles/responsive.css';
 
-function AppContent() {
-
-  const { appLoading } = useAuth();
-
-  if (appLoading) {
-    return <LoadingScreen />;
-  }
-
-  return (
-   <Router>
-
-  <AuthProvider>
-
-    <div className="min-h-screen bg-gray-100">
-
-      <Toaster position="top-right" />
-
-      <AppContent />
-
-    </div>
-
-  </AuthProvider>
-
-</Router>
-  );
-}
 function App() {
-
   return (
-
     <Router>
-
       <AuthProvider>
-
-        <div className="min-h-screen bg-gray-100">
-
-          <Toaster position="top-right" />
-
-          <Routes>
-
-            <Route path="/login" element={<Login />} />
-
-            <Route path="/signup" element={<Signup />} />
-
-            <Route
-              path="/business-details"
-              element={
-                <PrivateRoute>
-                  <BusinessDetails />
-                </PrivateRoute>
-              }
-            />
-
-            <Route
-              path="/dashboard"
-              element={
-                <PrivateRoute>
-                  <Dashboard />
-                </PrivateRoute>
-              }
-            />
-
-            <Route
-              path="/create-bill"
-              element={
-                <PrivateRoute>
-                  <CreateBill />
-                </PrivateRoute>
-              }
-            />
-
-            <Route
-              path="/bills"
-              element={
-                <PrivateRoute>
-                  <AllBills />
-                </PrivateRoute>
-              }
-            />
-
-            <Route
-              path="/bill/:id"
-              element={
-                <PrivateRoute>
-                  <BillDetails />
-                </PrivateRoute>
-              }
-            />
-
-            <Route
-              path="/edit-bill/:id"
-              element={
-                <PrivateRoute>
-                  <EditBill />
-                </PrivateRoute>
-              }
-            />
-
-            <Route
-              path="/"
-              element={<Navigate to="/dashboard" />}
-            />
-
-          </Routes>
-
-        </div>
-
+        <DataProvider>
+          <AppInitializer>
+            <div className="min-h-screen bg-gray-100">
+              <Toaster position="top-right" />
+              <Routes>
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
+                <Route
+                  path="/business-details"
+                  element={
+                    <PrivateRoute>
+                      <BusinessDetails />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/dashboard"
+                  element={
+                    <PrivateRoute>
+                      <Dashboard />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/create-bill"
+                  element={
+                    <PrivateRoute>
+                      <CreateBill />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/bills"
+                  element={
+                    <PrivateRoute>
+                      <AllBills />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/bill/:id"
+                  element={
+                    <PrivateRoute>
+                      <BillDetails />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/edit-bill/:id"
+                  element={
+                    <PrivateRoute>
+                      <EditBill />
+                    </PrivateRoute>
+                  }
+                />
+                <Route path="/" element={<Navigate to="/dashboard" />} />
+              </Routes>
+            </div>
+          </AppInitializer>
+        </DataProvider>
       </AuthProvider>
-
     </Router>
-
   );
-
 }
 
 export default App;
