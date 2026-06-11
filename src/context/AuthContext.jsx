@@ -11,18 +11,56 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem('token'));
   const [loading, setLoading] = useState(true);
+  const [business, setBusiness] = useState(null);
+const [bills, setBills] = useState([]);
+const [appLoading, setAppLoading] = useState(true);
 
   axios.defaults.baseURL = 'https://evbackend-3jlc.onrender.com/api';
 
-  useEffect(() => {
-    if (token) {
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      // You can add token verification here
+useEffect(() => {
+
+  const loadInitialData = async () => {
+
+    if (!token) {
       setLoading(false);
-    } else {
-      setLoading(false);
+      setAppLoading(false);
+      return;
     }
-  }, [token]);
+
+    try {
+
+      axios.defaults.headers.common['Authorization'] =
+        `Bearer ${token}`;
+
+      const [businessRes, billsRes] =
+        await Promise.all([
+
+          axios.get('/business/details'),
+
+          axios.get('/bills/all')
+
+        ]);
+
+      setBusiness(businessRes.data);
+
+      setBills(billsRes.data);
+
+    } catch (err) {
+
+      console.log(err);
+
+    } finally {
+
+      setLoading(false);
+      setAppLoading(false);
+
+    }
+
+  };
+
+  loadInitialData();
+
+}, [token]);
 
   const login = async (phoneNumber, password) => {
     try {
@@ -65,7 +103,22 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, login, signup, logout, loading }}>
+    <AuthContext.Provider value={{
+  user,
+  token,
+  login,
+  signup,
+  logout,
+
+  loading,
+  appLoading,
+
+  business,
+  setBusiness,
+
+  bills,
+  setBills
+}}>
       {children}
     </AuthContext.Provider>
   );

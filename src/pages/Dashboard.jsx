@@ -1,7 +1,7 @@
 // frontend/src/pages/Dashboard.js
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+
 import { useAuth } from '../context/AuthContext';
 import { Menu, Transition } from '@headlessui/react';
 import { UserCircleIcon, DocumentTextIcon, CogIcon, ArrowRightOnRectangleIcon } from '@heroicons/react/24/outline';
@@ -10,31 +10,11 @@ import toast from 'react-hot-toast';
 
 export default function Dashboard() {
   const navigate = useNavigate();
-  const { logout } = useAuth();
-  const [business, setBusiness] = useState(null);
+const { logout, business } = useAuth(); 
+
   const [showBillingForm, setShowBillingForm] = useState(false);
 
-  useEffect(() => {
-    fetchBusinessDetails();
-  }, []);
-
-  const fetchBusinessDetails = async () => {
-    try {
-      const token = localStorage.getItem('token');
-
-const response = await axios.get(
-  'https://evbackend-3jlc.onrender.com/api/business/details',
-  {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  }
-);
-      setBusiness(response.data);
-    } catch (error) {
-      console.log('No business details found');
-    }
-  };
+ 
 
    const handleStartBilling = () => {
   console.log("Button Clicked");

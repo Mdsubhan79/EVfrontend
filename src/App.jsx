@@ -22,11 +22,40 @@ import BillDetails from './pages/BillDetails.jsx';
 
 import AllBills from './pages/AllBills.jsx'; 
 import EditBill from './pages/EditBill.jsx';
+import LoadingScreen from './components/LoadingScreen';
+import { useAuth } from './context/AuthContext';
 
 import './App.css';
 import './index.css';
 import './styles/invoice.css';
 import './styles/responsive.css';
+
+function AppContent() {
+
+  const { appLoading } = useAuth();
+
+  if (appLoading) {
+    return <LoadingScreen />;
+  }
+
+  return (
+   <Router>
+
+  <AuthProvider>
+
+    <div className="min-h-screen bg-gray-100">
+
+      <Toaster position="top-right" />
+
+      <AppContent />
+
+    </div>
+
+  </AuthProvider>
+
+</Router>
+  );
+}
 function App() {
 
   return (

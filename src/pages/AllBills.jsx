@@ -4,67 +4,15 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import {EyeIcon,TrashIcon} from '@heroicons/react/24/outline';
+import { useAuth } from '../context/AuthContext';
 
 export default function AllBills() {
   const navigate = useNavigate();
-  const [bills, setBills] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { bills, setBills } = useAuth();
   
-  useEffect(() => {
-    fetchBills();
-  }, []);
+
   
-const fetchBills = async () => {
 
-  try {
-
-    const token = localStorage.getItem('token');
-
-    if (!token) {
-      navigate('/login');
-      return;
-    }
-
-    const response = await axios.get(
-      'https://evbackend-3jlc.onrender.com/api/bills/all',
-      {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      }
-    );
-
-    setBills(response.data);
-
-  } catch (error) {
-
-    console.log(error);
-
-    if (
-      error.response?.status === 401
-    ) {
-
-      localStorage.removeItem('token');
-
-      navigate('/login');
-
-    } else {
-
-      setTimeout(() => {
-  fetchBills();
-}, 3000);
-
-toast.error('Fetching bills...');
-
-    }
-
-  } finally {
-
-    setLoading(false);
-
-  }
-
-};
   const handleDeleteBill = async (billId) => {
 
   const confirmDelete = window.confirm(
@@ -104,13 +52,7 @@ toast.error(
   }
 
 };
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-xl">Loading...</div>
-      </div>
-    );
-  }
+
   
   return (
     <div className="min-h-screen bg-gray-100 py-8 px-4 sm:px-6 lg:px-8">
