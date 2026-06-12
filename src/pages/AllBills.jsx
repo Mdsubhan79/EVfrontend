@@ -1,14 +1,14 @@
 // src/pages/AllBills.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useData } from '../context/DataContext';
+import { useAuth } from '../context/AuthContext';
 import { EyeIcon, TrashIcon, ArrowPathIcon, ArrowLeftIcon } from '@heroicons/react/24/outline';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
 export default function AllBills() {
   const navigate = useNavigate();
-  const { bills, loading, refreshData } = useData();
+  const { bills, appLoading, refreshData } = useAuth();
   const [searchTerm, setSearchTerm] = useState('');
   const [filterDate, setFilterDate] = useState('');
   const [deleting, setDeleting] = useState(null);
@@ -33,7 +33,7 @@ export default function AllBills() {
       });
       
       toast.success('Bill deleted successfully');
-      await refreshData(); // Refresh the data after deletion
+      await refreshData();
       
     } catch (error) {
       console.log(error.response?.data || error);
@@ -42,6 +42,14 @@ export default function AllBills() {
       setDeleting(null);
     }
   };
+
+  if (appLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-100 py-8 px-4 sm:px-6 lg:px-8">
@@ -64,10 +72,10 @@ export default function AllBills() {
           
           <button
             onClick={refreshData}
-            disabled={loading}
+            disabled={appLoading}
             className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50"
           >
-            <ArrowPathIcon className={`h-5 w-5 ${loading ? 'animate-spin' : ''}`} />
+            <ArrowPathIcon className={`h-5 w-5 ${appLoading ? 'animate-spin' : ''}`} />
             Refresh
           </button>
         </div>
@@ -108,21 +116,11 @@ export default function AllBills() {
               <table className="w-full bills-table">
                 <thead className="bg-gray-50">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Invoice No
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Customer Name
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Date
-                    </th>
-                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Total Amount
-                    </th>
-                    <th className="px-5 py-3 text-center text-xs font-small text-gray-500 uppercase tracking-wider">
-                      Action
-                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Invoice No</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer Name</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Total Amount</th>
+                    <th className="px-5 py-3 text-center text-xs font-small text-gray-500 uppercase tracking-wider">Action</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
@@ -163,7 +161,7 @@ export default function AllBills() {
                           </button>
                         </div>
                        </td>
-                     </tr>
+                    </tr>
                   ))}
                 </tbody>
               </table>

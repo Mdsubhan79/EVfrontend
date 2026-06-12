@@ -1,4 +1,4 @@
-// frontend/src/context/AuthContext.js
+// frontend/src/context/AuthContext.jsx
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
@@ -11,10 +11,41 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem('token'));
   const [loading, setLoading] = useState(true);
+  const [business, setBusiness] = useState(null);
+  const [bills, setBills] = useState([]);
+  const [appLoading, setAppLoading] = useState(true);
 
   axios.defaults.baseURL = 'https://evbackend-3jlc.onrender.com/api';
 
+  useEffect(() => {
+    const loadInitialData = async () => {
+      if (!token) {
+        setLoading(false);
+        setAppLoading(false);
+        return;
+      }
 
+      try {
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+        const [businessRes, billsRes] = await Promise.all([
+          axios.get('/business/details'),
+          axios.get('/bills/all')
+        ]);
+
+        setBusiness(businessRes.data);
+        setBills(billsRes.data);
+
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setLoading(false);
+        setAppLoading(false);
+      }
+    };
+
+    loadInitialData();
+  }, [token]);
 
   const login = async (phoneNumber, password) => {
     try {
@@ -24,6 +55,19 @@ export const AuthProvider = ({ children }) => {
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       setToken(token);
       setUser(user);
+      
+      // After login, fetch business and bills data
+      try {
+        const [businessRes, billsRes] = await Promise.all([
+          axios.get('/business/details'),
+          axios.get('/bills/all')
+        ]);
+        setBusiness(businessRes.data);
+        setBills(billsRes.data);
+      } catch (err) {
+        console.log('Error fetching data after login:', err);
+      }
+      
       toast.success('Login successful!');
       return true;
     } catch (error) {
@@ -53,26 +97,63 @@ export const AuthProvider = ({ children }) => {
     delete axios.defaults.headers.common['Authorization'];
     setToken(null);
     setUser(null);
+    setBusiness(null);
+    setBills([]);
     toast.success('Logged out successfully');
+  };
+
+  const refreshData = async () => {
+    if (!token) return;
+    
+    setAppLoading(true);
+    try {
+      const [businessRes, billsRes] = await Promise.all([
+        axios.get('/business/details'),
+        axios.get('/bills/all')
+      ]);
+      setBusiness(businessRes.data);
+      setBills(billsRes.data);
+      toast.success('Data refreshed!');
+    } catch (err) {
+      toast.error('Failed to refresh data');
+    } finally {
+      setAppLoading(false);
+    }
+  };
+
+  // Calculate dashboard stats
+  const dashboardStats = {
+    totalBills: bills.length,
+    totalRevenue: bills.reduce((sum, bill) => sum + (bill.grandTotal || 0), 0),
+    todayBills: bills.filter(bill => {
+      const today = new Date().toDateString();
+      return new Date(bill.createdAt).toDateString() === today;
+    }).length,
+    thisMonthBills: bills.filter(bill => {
+      const now = new Date();
+      const billDate = new Date(bill.createdAt);
+      return billDate.getMonth() === now.getMonth() && 
+             billDate.getFullYear() === now.getFullYear();
+    }).length,
+    recentBills: bills.slice(0, 10),
   };
 
   return (
     <AuthContext.Provider value={{
-  user,
-  token,
-  login,
-  signup,
-  logout,
-
-  loading,
-  appLoading,
-
-  business,
-  setBusiness,
-
-  bills,
-  setBills
-}}>
+      user,
+      token,
+      login,
+      signup,
+      logout,
+      loading,
+      appLoading,
+      business,
+      setBusiness,
+      bills,
+      setBills,
+      refreshData,
+      dashboardStats
+    }}>
       {children}
     </AuthContext.Provider>
   );

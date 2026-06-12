@@ -2,7 +2,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { useData } from '../context/DataContext';
 import { Menu, Transition } from '@headlessui/react';
 import { 
   UserCircleIcon, 
@@ -15,12 +14,10 @@ import {
   BoltIcon,
   ArrowPathIcon
 } from '@heroicons/react/24/outline';
-import toast from 'react-hot-toast';
 
 export default function Dashboard() {
   const navigate = useNavigate();
-  const { logout } = useAuth();
-  const { business, dashboardStats, refreshData, loading } = useData();
+  const { logout, business, dashboardStats, appLoading, refreshData } = useAuth();
 
   const stats = [
     {
@@ -53,6 +50,14 @@ export default function Dashboard() {
     navigate('/create-bill');
   };
 
+  if (appLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Navigation Bar */}
@@ -74,11 +79,11 @@ export default function Dashboard() {
               {/* Refresh Button */}
               <button
                 onClick={refreshData}
-                disabled={loading}
+                disabled={appLoading}
                 className="p-2 text-gray-600 hover:text-gray-800 rounded-lg hover:bg-gray-100 transition"
                 title="Refresh Data"
               >
-                <ArrowPathIcon className={`h-5 w-5 ${loading ? 'animate-spin' : ''}`} />
+                <ArrowPathIcon className={`h-5 w-5 ${appLoading ? 'animate-spin' : ''}`} />
               </button>
               
               <Menu as="div" className="relative">
