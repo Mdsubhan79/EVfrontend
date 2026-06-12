@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [business, setBusiness] = useState(null);
   const [bills, setBills] = useState([]);
-  const [appLoading, setAppLoading] = useState(true);
+  const [appLoading, setAppLoading] = useState(true); // This controls the loading screen
 
   axios.defaults.baseURL = 'https://evbackend-3jlc.onrender.com/api';
 
@@ -24,6 +24,10 @@ export const AuthProvider = ({ children }) => {
         setAppLoading(false);
         return;
       }
+
+      // Set loading to true when starting to load
+      setAppLoading(true);
+      setLoading(true);
 
       try {
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -37,7 +41,7 @@ export const AuthProvider = ({ children }) => {
         setBills(billsRes.data);
 
       } catch (err) {
-        console.log(err);
+        console.log('Error loading data:', err);
       } finally {
         setLoading(false);
         setAppLoading(false);
@@ -56,7 +60,9 @@ export const AuthProvider = ({ children }) => {
       setToken(token);
       setUser(user);
       
-      // After login, fetch business and bills data
+      // Show loading while fetching data after login
+      setAppLoading(true);
+      
       try {
         const [businessRes, billsRes] = await Promise.all([
           axios.get('/business/details'),
@@ -66,12 +72,15 @@ export const AuthProvider = ({ children }) => {
         setBills(billsRes.data);
       } catch (err) {
         console.log('Error fetching data after login:', err);
+      } finally {
+        setAppLoading(false);
       }
       
       toast.success('Login successful!');
       return true;
     } catch (error) {
       toast.error(error.response?.data?.message || 'Login failed');
+      setAppLoading(false);
       return false;
     }
   };
@@ -146,7 +155,7 @@ export const AuthProvider = ({ children }) => {
       signup,
       logout,
       loading,
-      appLoading,
+      appLoading,  // Make sure this is exported
       business,
       setBusiness,
       bills,
