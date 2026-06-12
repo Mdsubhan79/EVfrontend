@@ -88,9 +88,17 @@ export const DataProvider = ({ children }) => {
     }
   };
 
-  useEffect(() => {
+useEffect(() => {
+
+  const token = localStorage.getItem('token');
+
+  if (token) {
     preloadAllData();
-  }, []);
+  } else {
+    setLoading(false);
+  }
+
+}, []);
 
   const refreshData = async () => {
     await preloadAllData();

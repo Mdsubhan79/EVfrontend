@@ -11,56 +11,10 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem('token'));
   const [loading, setLoading] = useState(true);
-  const [business, setBusiness] = useState(null);
-const [bills, setBills] = useState([]);
-const [appLoading, setAppLoading] = useState(true);
 
   axios.defaults.baseURL = 'https://evbackend-3jlc.onrender.com/api';
 
-useEffect(() => {
 
-  const loadInitialData = async () => {
-
-    if (!token) {
-      setLoading(false);
-      setAppLoading(false);
-      return;
-    }
-
-    try {
-
-      axios.defaults.headers.common['Authorization'] =
-        `Bearer ${token}`;
-
-      const [businessRes, billsRes] =
-        await Promise.all([
-
-          axios.get('/business/details'),
-
-          axios.get('/bills/all')
-
-        ]);
-
-      setBusiness(businessRes.data);
-
-      setBills(billsRes.data);
-
-    } catch (err) {
-
-      console.log(err);
-
-    } finally {
-
-      setLoading(false);
-      setAppLoading(false);
-
-    }
-
-  };
-
-  loadInitialData();
-
-}, [token]);
 
   const login = async (phoneNumber, password) => {
     try {
