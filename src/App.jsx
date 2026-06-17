@@ -3,7 +3,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider } from './context/AuthContext';
-import { DataProvider } from './context/DataContext';
+
 import PrivateRoute from './components/PrivateRoute';
 import AppInitializer from './components/AppInitializer';
 import Login from './pages/Login';
@@ -23,7 +23,7 @@ function App() {
   return (
     <Router>
       <AuthProvider>
-        <DataProvider>
+    
           <AppInitializer>
             <div className="min-h-screen bg-gray-100">
               <Toaster position="top-right" />
@@ -82,7 +82,6 @@ function App() {
               </Routes>
             </div>
           </AppInitializer>
-        </DataProvider>
       </AuthProvider>
     </Router>
   );

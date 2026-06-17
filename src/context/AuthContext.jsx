@@ -11,45 +11,10 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem('token'));
   const [loading, setLoading] = useState(true);
-  const [business, setBusiness] = useState(null);
-  const [bills, setBills] = useState([]);
-  const [appLoading, setAppLoading] = useState(true); // This controls the loading screen
-
+  
   axios.defaults.baseURL = 'https://evbackend-3jlc.onrender.com/api';
 
-  useEffect(() => {
-    const loadInitialData = async () => {
-      if (!token) {
-        setLoading(false);
-        setAppLoading(false);
-        return;
-      }
-
-      // Set loading to true when starting to load
-      setAppLoading(true);
-      setLoading(true);
-
-      try {
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-
-        const [businessRes, billsRes] = await Promise.all([
-          axios.get('/business/details'),
-          axios.get('/bills/all')
-        ]);
-
-        setBusiness(businessRes.data);
-        setBills(billsRes.data);
-
-      } catch (err) {
-        console.log('Error loading data:', err);
-      } finally {
-        setLoading(false);
-        setAppLoading(false);
-      }
-    };
-
-    loadInitialData();
-  }, [token]);
+  
 
   const login = async (phoneNumber, password) => {
     try {
@@ -64,6 +29,9 @@ export const AuthProvider = ({ children }) => {
       setAppLoading(true);
       
       try {
+        await new Promise(resolve =>
+            setTimeout(resolve, 1500)
+          );
         const [businessRes, billsRes] = await Promise.all([
           axios.get('/business/details'),
           axios.get('/bills/all')
@@ -130,7 +98,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Calculate dashboard stats
+  // Calculate dashboard 
   const dashboardStats = {
     totalBills: bills.length,
     totalRevenue: bills.reduce((sum, bill) => sum + (bill.grandTotal || 0), 0),
@@ -154,14 +122,7 @@ export const AuthProvider = ({ children }) => {
       login,
       signup,
       logout,
-      loading,
-      appLoading,  // Make sure this is exported
-      business,
-      setBusiness,
-      bills,
-      setBills,
-      refreshData,
-      dashboardStats
+      loading
     }}>
       {children}
     </AuthContext.Provider>
