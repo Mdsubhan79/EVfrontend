@@ -32,7 +32,7 @@ const [appLoading, setAppLoading] = useState(true);
       
       try {
         await new Promise(resolve =>
-            setTimeout(resolve, 1500)
+            setTimeout(resolve, 6000)
           );
         const [businessRes, billsRes] = await Promise.all([
           axios.get('/business/details'),

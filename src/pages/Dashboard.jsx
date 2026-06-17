@@ -16,7 +16,7 @@ import {
 
 export default function Dashboard() {
   const navigate = useNavigate();
-  const { logout, business, dashboardStats, appLoading,bill, refreshData } = useAuth();
+  const { logout, business, dashboardStats, appLoading,bills, refreshData } = useAuth();
 
   const stats = [
     {
