@@ -1,4 +1,3 @@
-// src/pages/Dashboard.jsx
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
@@ -17,7 +16,7 @@ import {
 
 export default function Dashboard() {
   const navigate = useNavigate();
-  const { logout, business, dashboardStats, appLoading, refreshData } = useAuth();
+  const { logout, business, dashboardStats, appLoading,bill, refreshData } = useAuth();
 
   const stats = [
     {

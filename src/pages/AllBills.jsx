@@ -15,7 +15,7 @@ export default function AllBills() {
 
   const filteredBills = bills.filter(bill => {
     const matchesSearch = bill.customerDetails.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         bill.invoiceNumber.toLowerCase().includes(searchTerm.toLowerCase());
+    bill.invoiceNumber.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesDate = !filterDate || new Date(bill.createdAt).toDateString() === new Date(filterDate).toDateString();
     return matchesSearch && matchesDate;
   });

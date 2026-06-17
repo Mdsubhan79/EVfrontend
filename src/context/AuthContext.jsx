@@ -11,7 +11,9 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem('token'));
   const [loading, setLoading] = useState(true);
-  
+  const [business, setBusiness] = useState(null);
+const [bills, setBills] = useState([]);
+const [appLoading, setAppLoading] = useState(true);
   axios.defaults.baseURL = 'https://evbackend-3jlc.onrender.com/api';
 
   
@@ -117,13 +119,19 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider value={{
-      user,
-      token,
-      login,
-      signup,
-      logout,
-      loading
-    }}>
+  user,
+  token,
+
+  business,
+  bills,
+
+  loading,
+  appLoading,
+
+  login,
+  signup,
+  logout
+}}>
       {children}
     </AuthContext.Provider>
   );
