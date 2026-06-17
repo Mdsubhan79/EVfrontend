@@ -60,7 +60,7 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Navigation Bar */}
-      <nav className="bg-white shadow-lg sticky top-0 z-50">
+      <nav className="bg-white/90 backdrop-blur-md shadow-md sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex items-center">
@@ -149,65 +149,147 @@ export default function Dashboard() {
       
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Welcome Section */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Welcome back, {business?.businessName?.split(' ')[0] || 'Owner'}! 👋
-          </h1>
-          <p className="text-gray-600">
-            Here's what's happening with your business today.
-          </p>
-        </div>
+{/* Hero Section */}
+
+<div className="bg-gradient-to-r from-green-600 to-green-500 rounded-3xl p-8 text-white mb-8 shadow-lg">
+
+  <h1 className="text-4xl font-bold mb-2">
+    Welcome Back 👋
+  </h1>
+
+  <p className="text-green-100 text-lg">
+    {business?.businessName}
+  </p>
+
+  <p className="text-green-50 mt-2">
+    Manage invoices and revenue.
+  </p>
+
+</div>
         
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          {stats.map((stat, index) => (
-            <div key={index} className="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-gray-600 mb-1">{stat.title}</p>
-                  <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
-                </div>
-                <div className={`${stat.color} p-3 rounded-full`}>
-                  <stat.icon className="h-6 w-6 text-white" />
-                </div>
-              </div>
-            </div>
-          ))}
+<div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+
+  {stats.map((stat, index) => (
+
+    <div
+      key={index}
+      className="bg-white rounded-3xl shadow-md p-6 hover:shadow-xl transition duration-300"
+    >
+
+      <div className="flex justify-between items-center">
+
+        <div>
+
+          <p className="text-gray-500 text-sm">
+            {stat.title}
+          </p>
+
+          <h2 className="text-3xl font-bold text-gray-800 mt-2">
+            {stat.value}
+          </h2>
+
         </div>
+
+        <div className={`${stat.color} p-4 rounded-2xl`}>
+          <stat.icon className="h-7 w-7 text-white" />
+        </div>
+
+      </div>
+
+    </div>
+
+  ))}
+
+</div>
         
         {/* Action Buttons */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          <button
-            onClick={handleStartBilling}
-            className="bg-gradient-to-r from-green-600 to-green-700 text-white p-6 rounded-xl shadow-lg hover:shadow-xl transition transform hover:-translate-y-1"
-          >
-            <div className="flex items-center justify-between">
-              <div className="text-left">
-                <h3 className="text-xl font-bold mb-2">Start Billing</h3>
-                <p className="text-green-100 text-sm">Create a new invoice for your customer</p>
-              </div>
-              <DocumentTextIcon className="h-12 w-12 opacity-75" />
-            </div>
-          </button>
-          
-          <button
-            onClick={() => navigate('/bills')}
-            className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-6 rounded-xl shadow-lg hover:shadow-xl transition transform hover:-translate-y-1"
-          >
-            <div className="flex items-center justify-between">
-              <div className="text-left">
-                <h3 className="text-xl font-bold mb-2">View All Bills</h3>
-                <p className="text-blue-100 text-sm">Manage and track your invoices</p>
-              </div>
-              <DocumentDuplicateIcon className="h-12 w-12 opacity-75" />
-            </div>
-          </button>
-        </div>
-        
+<div className="grid md:grid-cols-2 gap-6 mb-8">
+
+  <div
+    onClick={() => navigate('/create-bill')}
+    className="cursor-pointer bg-gradient-to-r from-green-600 to-green-500 rounded-3xl p-8 text-white shadow-lg hover:scale-105 transition"
+  >
+
+    <h2 className="text-2xl font-bold">
+      Create New Bill
+    </h2>
+
+    <p className="mt-2 text-green-100">
+      Generate invoice instantly
+    </p>
+
+  </div>
+
+  <div
+    onClick={() => navigate('/bills')}
+    className="cursor-pointer bg-gradient-to-r from-blue-600 to-blue-500 rounded-3xl p-8 text-white shadow-lg hover:scale-105 transition"
+  >
+
+    <h2 className="text-2xl font-bold">
+      View All Bills
+    </h2>
+
+    <p className="mt-2 text-blue-100">
+      Manage all invoices
+    </p>
+
+  </div>
+
+</div>
+        <div className="bg-white rounded-3xl shadow-md p-6 mb-8">
+
+  <h2 className="text-xl font-bold mb-4">
+    Business Information
+  </h2>
+
+  <div className="grid md:grid-cols-2 gap-5">
+
+    <div>
+      <p className="text-gray-500 text-sm">
+        Business Name
+      </p>
+
+      <p className="font-semibold">
+        {business?.businessName}
+      </p>
+    </div>
+
+    <div>
+      <p className="text-gray-500 text-sm">
+        GST Number
+      </p>
+
+      <p className="font-semibold">
+        {business?.gstNumber}
+      </p>
+    </div>
+
+    <div>
+      <p className="text-gray-500 text-sm">
+        Phone
+      </p>
+
+      <p className="font-semibold">
+        {business?.phone}
+      </p>
+    </div>
+
+    <div>
+      <p className="text-gray-500 text-sm">
+        Email
+      </p>
+
+      <p className="font-semibold">
+        {business?.email}
+      </p>
+    </div>
+
+  </div>
+
+</div>
         {/* Recent Bills */}
         {dashboardStats.recentBills.length > 0 && (
-          <div className="bg-white rounded-xl shadow-sm overflow-hidden">
+          <div className="bg-white rounded-3xl shadow-lg overflow-hidden border border-gray-100">
             <div className="px-6 py-4 border-b border-gray-200">
               <h3 className="text-lg font-semibold text-gray-900">Recent Bills</h3>
             </div>
