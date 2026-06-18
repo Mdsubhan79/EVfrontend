@@ -398,7 +398,7 @@ export default function BillDetails() {
             </div>
           </div>
           
-          {/* Signature - Pushed to Bottom */}
+          {/* Signature*/}
           <div className="signature-area">
             <div className="signature-box">
               

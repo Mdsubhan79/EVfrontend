@@ -15,12 +15,12 @@ export default function Dashboard() {
   const { business, bills, appLoading, dashboardStats, user } = useAuth();
   const navigate = useNavigate();
 
-  // If still loading, show nothing (global loader is active)
+  
   if (appLoading) {
     return null;
   }
 
-  // If no business details, redirect handled by AppInitializer
+  
   if (!business || !business.businessName) {
     return null;
   }

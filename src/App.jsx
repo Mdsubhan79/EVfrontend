@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider } from './context/AuthContext';
 import PrivateRoute from './components/PrivateRoute';
-import AppInitializer from './components/AppInitializer';
+import AppInitializer from './components/Appinitializer';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import BusinessDetails from './pages/BusinessDetails';
