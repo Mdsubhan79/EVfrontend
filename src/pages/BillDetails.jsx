@@ -155,7 +155,9 @@ export default function BillDetails() {
   const handleSendWhatsApp = () => {
     const phoneNumber = prompt('Enter customer phone number with country code (e.g., 91XXXXXXXXXX):');
     if (!phoneNumber) return;
-    await downloadPDF();
+    const handleSendWhatsApp = async () => {
+   await downloadPDF();
+}
     const text = `🧾 *Invoice from ${business?.businessName || 'Us'}*\n\n` +
                  `📋 Invoice No: *${sanitizedName}_${bill?.invoiceNumber}*\n` +
                  `💰 Total Amount: *₹${bill?.grandTotal}*\n` +
