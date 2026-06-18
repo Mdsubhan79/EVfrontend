@@ -3,6 +3,8 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import {
+  ArrowRightOnRectangleIcon,
+  UserCircleIcon,
   CurrencyRupeeIcon,
   DocumentTextIcon,
   CalendarDaysIcon,
@@ -12,7 +14,14 @@ import {
 } from '@heroicons/react/24/outline';
 
 export default function Dashboard() {
-  const { business, bills, appLoading, dashboardStats, user } = useAuth();
+  const {
+  business,
+  bills,
+  appLoading,
+  dashboardStats,
+  user,
+  logout
+} = useAuth();
   const navigate = useNavigate();
 
   
@@ -34,15 +43,15 @@ export default function Dashboard() {
       bgLight: 'bg-blue-50',
       textColor: 'text-blue-700',
     },
-    {
+   {/* {
       name: 'Total Revenue',
       value: `₹${dashboardStats.totalRevenue.toLocaleString('en-IN')}`,
       icon: CurrencyRupeeIcon,
       color: 'bg-green-500',
       bgLight: 'bg-green-50',
       textColor: 'text-green-700',
-    },
-    {
+    },*/}
+    ,{
       name: "Today's Bills",
       value: dashboardStats.todayBills,
       icon: CalendarDaysIcon,
@@ -81,13 +90,30 @@ export default function Dashboard() {
                 <p className="text-sm text-gray-500">{business.tagline}</p>
               </div>
             </div>
-            <button
-              onClick={() => navigate('/create-bill')}
-              className="flex items-center gap-2 bg-green-600 text-white px-4 py-2.5 rounded-lg hover:bg-green-700 transition-colors shadow-sm"
-            >
-              <PlusIcon className="h-5 w-5" />
-              <span className="font-medium">Create New Bill</span>
-            </button>
+           <div className="flex items-center gap-4">
+                <button
+                  onClick={() => navigate('/create-bill')}
+                  className="flex items-center gap-2 bg-green-600 text-white px-4 py-2.5 rounded-lg hover:bg-green-700"
+                >
+                  <PlusIcon className="h-5 w-5" />
+                  <span>Create Bill</span>
+                </button>
+
+                <div className="flex items-center gap-2 bg-gray-100 px-3 py-2 rounded-lg">
+                  <UserCircleIcon className="h-6 w-6 text-gray-600" />
+                  <span className="text-sm font-medium">
+                    {user?.name || "Admin"}
+                  </span>
+                </div>
+
+                <button
+                  onClick={logout}
+                  className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700"
+                >
+                  Logout
+                </button>
+
+              </div>
           </div>
         </div>
       </div>
