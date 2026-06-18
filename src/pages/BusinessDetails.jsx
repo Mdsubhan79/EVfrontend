@@ -7,7 +7,7 @@ import { useAuth } from '../context/AuthContext';
 
 export default function BusinessDetails() {
   const navigate = useNavigate();
-  const { token } = useAuth();
+  const { token, setBusiness } = useAuth();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     businessName: '',
@@ -32,7 +32,7 @@ export default function BusinessDetails() {
         setFormData(response.data);
       }
     } catch (error) {
-      // No business details found, that's fine
+      
       console.log('No existing business details');
     }
   };
@@ -58,11 +58,24 @@ export default function BusinessDetails() {
     });
     
     try {
-      await axios.post('/business/details', submitData, {
-        headers: { 'Content-Type': 'multipart/form-data' }
-      });
-      toast.success('Business details saved successfully!');
-      navigate('/dashboard');
+            const response = await axios.post(
+        '/business/details',
+        submitData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+      );
+
+      setBusiness(response.data);
+      const businessRes = await axios.get('/business/details');
+
+setBusiness(businessRes.data);
+
+toast.success('Business details saved successfully!');
+
+navigate('/dashboard');
     } catch (error) {
       toast.error(error.response?.data?.message || 'Failed to save business details');
     } finally {

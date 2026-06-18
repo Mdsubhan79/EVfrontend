@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const loadInitialData = async () => {
       if (!token) {
-        // No token -> not logged in, stop loading immediately
+        // No token not logged in stop loading immediately
         setLoading(false);
         setAppLoading(false);
         setBusiness(null);
@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }) => {
       setLoading(true);
       setAppLoading(true);
 
-      // Set auth header
+      // Set authheader
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
       try {
@@ -47,7 +47,7 @@ export const AuthProvider = ({ children }) => {
       } catch (err) {
         console.log('Error loading initial data:', err);
         
-        // If unauthorized, clear token and reset state
+        
         if (err.response?.status === 401) {
           localStorage.removeItem('token');
           delete axios.defaults.headers.common['Authorization'];

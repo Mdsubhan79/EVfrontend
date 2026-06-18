@@ -99,12 +99,7 @@ export default function Dashboard() {
                   <span>Create Bill</span>
                 </button>
 
-                <div className="flex items-center gap-2 bg-gray-100 px-3 py-2 rounded-lg">
-                  <UserCircleIcon className="h-6 w-6 text-gray-600" />
-                  <span className="text-sm font-medium">
-                    {user?.name || "Admin"}
-                  </span>
-                </div>
+              
 
                 <button
                   onClick={logout}
