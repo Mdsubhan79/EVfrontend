@@ -43,14 +43,14 @@ export default function Dashboard() {
       bgLight: 'bg-blue-50',
       textColor: 'text-blue-700',
     },
-   {/* {
+    {
       name: 'Total Revenue',
       value: `₹${dashboardStats.totalRevenue.toLocaleString('en-IN')}`,
       icon: CurrencyRupeeIcon,
       color: 'bg-green-500',
       bgLight: 'bg-green-50',
       textColor: 'text-green-700',
-    },*/}
+    },
     ,{
       name: "Today's Bills",
       value: dashboardStats.todayBills,
