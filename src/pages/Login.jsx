@@ -26,7 +26,7 @@ export default function Login() {
       <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md">
         <div className="text-center mb-8">
           <BoltIcon className="h-12 w-12 text-green-600 mx-auto" />
-          <h2 className="text-3xl font-bold text-gray-800 mt-4">EV Showroom Billing</h2>
+          <h2 className="text-3xl font-bold text-gray-800 mt-4">EG Billing</h2>
           <p className="text-gray-600 mt-2">Welcome back! Please login to your account</p>
         </div>
         

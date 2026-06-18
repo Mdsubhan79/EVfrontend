@@ -155,12 +155,13 @@ export default function BillDetails() {
   const handleSendWhatsApp = () => {
     const phoneNumber = prompt('Enter customer phone number with country code (e.g., 91XXXXXXXXXX):');
     if (!phoneNumber) return;
-
+    await downloadPDF();
     const text = `🧾 *Invoice from ${business?.businessName || 'Us'}*\n\n` +
-                 `📋 Invoice No: *${bill?.invoiceNumber}*\n` +
+                 `📋 Invoice No: *${sanitizedName}_${bill?.invoiceNumber}*\n` +
                  `💰 Total Amount: *₹${bill?.grandTotal}*\n` +
                  `📅 Date: ${new Date(bill?.createdAt).toLocaleDateString()}\n\n` +
-                 `Thank you for your purchase! 🙏\n\n` +
+                 `Thank you for your purchase! 🙏\n` +
+                 `📌 Please find the attached bill.\n\n` +
                  `For queries: 📞 ${business?.phone || 'N/A'}`;
     
     window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(text)}`, '_blank');

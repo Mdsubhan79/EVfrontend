@@ -635,14 +635,7 @@ export default function EditBill() {
                           <label className="block text-xs font-medium text-gray-600 mb-1">Wheel Size</label>
                           <input type="text" value={product.wheelSize || ''} onChange={(e) => handleProductChange(index, 'wheelSize', e.target.value)} placeholder="Wheel Size" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm" />
                         </div>
-                        <div>
-                          <label className="block text-xs font-medium text-gray-600 mb-1">Controller</label>
-                          <input type="text" value={product.controller || ''} onChange={(e) => handleProductChange(index, 'controller', e.target.value)} placeholder="Controller" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm" />
-                        </div>
-                        <div>
-                          <label className="block text-xs font-medium text-gray-600 mb-1">Battery Details</label>
-                          <input type="text" value={product.battery || ''} onChange={(e) => handleProductChange(index, 'battery', e.target.value)} placeholder="Battery Details" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm" />
-                        </div>
+                        
                       </div>
                     </details>
                   </div>
@@ -686,38 +679,8 @@ export default function EditBill() {
             {/* Warranty & Instructions Section */}
             <div className="bill-form-section">
               <h3 className="bill-form-title">🛡️ Warranty & Special Instructions</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Motor, Controller & Charger Warranty
-                  </label>
-                  <input
-                    type="text"
-                    value={specialInstructions.motorWarranty}
-                    onChange={(e) => setSpecialInstructions(prev => ({ 
-                      ...prev, motorWarranty: e.target.value 
-                    }))}
-                    className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Battery Warranty
-                  </label>
-                  <input
-                    type="text"
-                    value={specialInstructions.batteryWarranty}
-                    onChange={(e) => setSpecialInstructions(prev => ({ 
-                      ...prev, batteryWarranty: e.target.value 
-                    }))}
-                    className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm"
-                  />
-                </div>
-              </div>
+              
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Other Comments / Special Instructions
-                </label>
                 <textarea
                   value={specialInstructions.otherComments}
                   onChange={(e) => setSpecialInstructions(prev => ({ 
