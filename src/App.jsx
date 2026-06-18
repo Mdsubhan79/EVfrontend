@@ -3,7 +3,6 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider } from './context/AuthContext';
-
 import PrivateRoute from './components/PrivateRoute';
 import AppInitializer from './components/AppInitializer';
 import Login from './pages/Login';
@@ -23,10 +22,19 @@ function App() {
   return (
     <Router>
       <AuthProvider>
-    
+       
           <AppInitializer>
             <div className="min-h-screen bg-gray-100">
-              <Toaster position="top-right" />
+              <Toaster 
+                position="top-right"
+                toastOptions={{
+                  duration: 3000,
+                  style: {
+                    background: '#363636',
+                    color: '#fff',
+                  },
+                }}
+              />
               <Routes>
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
@@ -79,9 +87,11 @@ function App() {
                   }
                 />
                 <Route path="/" element={<Navigate to="/dashboard" />} />
+                <Route path="*" element={<Navigate to="/dashboard" />} />
               </Routes>
             </div>
           </AppInitializer>
+        
       </AuthProvider>
     </Router>
   );
