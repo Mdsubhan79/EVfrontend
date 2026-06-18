@@ -61,7 +61,7 @@ const LoadingScreen = ({ message = "Loading your dashboard...", progress = 0 }) 
 
         {/* Title */}
         <h2 className="text-2xl font-bold text-gray-800 mb-2">
-          EV Billing System
+          EG Billing
         </h2>
         
         {/* Loading Message */}
