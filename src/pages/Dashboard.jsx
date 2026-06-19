@@ -1,5 +1,5 @@
 // src/pages/Dashboard.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
@@ -18,6 +18,24 @@ import {
 
 export default function Dashboard() {
   const [showMenu, setShowMenu] = useState(false);
+
+const menuRef = useRef(null);
+useEffect(() => {
+  const handleClickOutside = (event) => {
+    if (
+      menuRef.current &&
+      !menuRef.current.contains(event.target)
+    ) {
+      setShowMenu(false);
+    }
+  };
+
+  document.addEventListener('mousedown', handleClickOutside);
+
+  return () => {
+    document.removeEventListener('mousedown', handleClickOutside);
+  };
+}, []);
   const {
   business,
   bills,
@@ -115,7 +133,10 @@ export default function Dashboard() {
         </div>
       </div>
 {showMenu && (
-  <div className="fixed top-0 right-0 h-full w-72 bg-white shadow-2xl z-50 transition-all">
+  <div
+  ref={menuRef}
+  className="fixed top-0 right-0 h-full w-72 bg-white shadow-2xl z-50 transition-all"
+>
 
     <div className="p-5 border-b">
 
