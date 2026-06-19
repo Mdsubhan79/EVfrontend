@@ -10,7 +10,7 @@ const AppInitializer = ({ children }) => {
   const location = useLocation();
 
   useEffect(() => {
-    // Redirect to business details if business is not set
+   
     if (!appLoading && !loading && token) {
       const hasBusinessDetails = business && business.businessName;
       const isBusinessRoute = location.pathname === '/business-details';

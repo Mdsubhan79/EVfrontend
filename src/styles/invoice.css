@@ -799,3 +799,36 @@ body {
 .checkmark-animation {
   animation: checkmark 0.5s ease-out;
 }
+
+/* Dashboard Mobile */
+
+@media (max-width: 768px) {
+
+  .create-bill-btn {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+
+  .create-bill-btn span {
+    display: none;
+  }
+
+  .profile-btn svg {
+    width: 34px;
+    height: 34px;
+  }
+
+}
+
+@media (max-width: 480px) {
+
+  .create-bill-btn {
+    padding: 8px;
+  }
+
+  .profile-btn svg {
+    width: 30px;
+    height: 30px;
+  }
+
+}

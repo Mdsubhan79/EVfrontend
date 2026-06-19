@@ -2,17 +2,21 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import React, { useState } from 'react';
+
 import {
-  ArrowRightOnRectangleIcon,
-  UserCircleIcon,
   CurrencyRupeeIcon,
   DocumentTextIcon,
   CalendarDaysIcon,
   ChartBarIcon,
   PlusIcon,
   BoltIcon,
+  UserCircleIcon,
+  Cog6ToothIcon,
+  ArrowRightOnRectangleIcon,
+  Bars3Icon
 } from '@heroicons/react/24/outline';
-
+const [showMenu, setShowMenu] = useState(false);
 export default function Dashboard() {
   const {
   business,
@@ -90,29 +94,67 @@ export default function Dashboard() {
                 <p className="text-sm text-gray-500">{business.tagline}</p>
               </div>
             </div>
-           <div className="flex items-center gap-4">
-                <button
-                  onClick={() => navigate('/create-bill')}
-                  className="flex items-center gap-2 bg-green-600 text-white px-4 py-2.5 rounded-lg hover:bg-green-700"
-                >
-                  <PlusIcon className="h-5 w-5" />
-                  <span>Create Bill</span>
-                </button>
+           <div className="flex items-center gap-3">
+              <button
+                onClick={() => navigate('/create-bill')}
+                className="create-bill-btn flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700"
+              >
+                <PlusIcon className="h-5 w-5" />
+                <span>Create Bill</span>
+              </button>
 
-              
+              <button
+                onClick={() => setShowMenu(!showMenu)}
+                className="profile-btn"
+              >
+                <UserCircleIcon className="h-10 w-10 text-gray-700" />
+              </button>
 
-                <button
-                  onClick={logout}
-                  className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700"
-                >
-                  Logout
-                </button>
+            </div>
+            </div>
+        </div>
+      </div>
+{showMenu && (
+  <div className="fixed top-0 right-0 h-full w-72 bg-white shadow-2xl z-50 transition-all">
 
-              </div>
-          </div>
+    <div className="p-5 border-b">
+
+      <div className="flex items-center gap-3">
+        <UserCircleIcon className="h-12 w-12 text-gray-700" />
+        <div>
+          <h3 className="font-bold">
+            {user?.name || "Admin"}
+          </h3>
+          <p className="text-sm text-gray-500">
+            {business?.businessName}
+          </p>
         </div>
       </div>
 
+    </div>
+
+    <div className="p-4">
+
+      <button
+        onClick={() => navigate('/business-details')}
+        className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100"
+      >
+        <Cog6ToothIcon className="h-5 w-5" />
+        Settings
+      </button>
+
+      <button
+        onClick={logout}
+        className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-red-50 text-red-600 mt-2"
+      >
+        <ArrowRightOnRectangleIcon className="h-5 w-5" />
+        Logout
+      </button>
+
+    </div>
+
+  </div>
+)}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Stats Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">

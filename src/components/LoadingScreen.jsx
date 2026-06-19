@@ -83,7 +83,7 @@ const LoadingScreen = ({ message = "Loading your dashboard...", progress = 0 }) 
         {/* Loading Tip */}
         <div className="mt-8 text-sm text-gray-500 max-w-md mx-auto">
           <p className="animate-pulse">
-            ⚡ Please wait while we prepare your dashboard...
+            ⚡ Please wait while dashboard is preparing...
           </p>
         </div>
       </div>
