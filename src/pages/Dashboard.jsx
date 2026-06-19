@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
-
 import {
   CurrencyRupeeIcon,
   DocumentTextIcon,
@@ -16,8 +15,9 @@ import {
   ArrowRightOnRectangleIcon,
   Bars3Icon
 } from '@heroicons/react/24/outline';
-const [showMenu, setShowMenu] = useState(false);
+
 export default function Dashboard() {
+  const [showMenu, setShowMenu] = useState(false);
   const {
   business,
   bills,
@@ -55,7 +55,7 @@ export default function Dashboard() {
       bgLight: 'bg-green-50',
       textColor: 'text-green-700',
     },
-    ,{
+    {
       name: "Today's Bills",
       value: dashboardStats.todayBills,
       icon: CalendarDaysIcon,
