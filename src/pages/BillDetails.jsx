@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'; 
 import { useParams, useNavigate } from 'react-router-dom';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
@@ -10,6 +10,7 @@ import {
   ChatBubbleLeftRightIcon, 
   PrinterIcon 
 } from '@heroicons/react/24/outline';
+import BackButton from '../components/BackButton';
 
 export default function BillDetails() {
   const { id } = useParams();
@@ -196,10 +197,12 @@ export default function BillDetails() {
   }
   
   return (
-    <div className="min-h-screen bg-gray-200 py-6 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-5xl mx-auto">
+    <div className="min-h-screen bg-gray-200 py-6 px-4 sm:px-6 lg:px-8 print:bg-white print:p-0 print:min-h-0">
+      <div className="max-w-5xl mx-auto print:max-w-none print:mx-0">
         {/* Action Buttons */}
-        <div className="flex flex-wrap justify-end gap-3 mb-6 no-print">
+        <div className="flex flex-wrap items-center justify-between gap-3 mb-6 no-print">
+          <BackButton />
+          <div className="flex flex-wrap gap-3">
           <button
             onClick={() => navigate(`/edit-bill/${id}`)}
             className="flex items-center gap-2 px-4 py-2.5 bg-white text-gray-700 rounded-lg shadow-sm hover:shadow-md border border-gray-300 hover:border-blue-400 transition-all duration-200 font-medium text-sm"
@@ -231,6 +234,7 @@ export default function BillDetails() {
             <PrinterIcon className="h-4 w-4" />
             Print Bill
           </button>
+          </div>
         </div>
         
         {/* Invoice - Flexbox column to push signature to bottom */}
@@ -249,12 +253,20 @@ export default function BillDetails() {
                         src={business.logo}
                         alt="Logo"
                         crossOrigin="anonymous"
-                        className="w-14 h-14 sm:w-16 sm:h-16 object-contain border border-gray-200 rounded-lg p-1"
+                        className="w-20 h-20 sm:w-24 sm:h-24 object-contain border border-gray-200 rounded-lg p-1"
                       />
                     </div>
                   )}
                   <div>
-                    <h1 className="invoice-company">{business?.businessName || 'Company'}</h1>
+                   <h1
+                      className="invoice-company"
+                      style={{
+                      fontFamily: "'Orbitron', sans-serif",
+                      fontSize: "30px",
+                      fontWeight: "700",
+                      color: "#044042",
+                      letterSpacing: "1px"
+                    }}>{business?.businessName || 'Company'}</h1>
                     <p className="invoice-tagline">{business?.tagline || 'Trusted EV Partner'}</p>
                   </div>
                 </div>
@@ -315,14 +327,7 @@ export default function BillDetails() {
                     <span className="spec-label">Range</span>
                     <span className="spec-value">{product.range || 'N/A'}</span>
                   </div>
-                  <div className="spec-item">
-                    <span className="spec-label">Speed</span>
-                    <span className="spec-value">{product.topSpeed || 'N/A'}</span>
-                  </div>
-                  <div className="spec-item">
-                    <span className="spec-label">Charge</span>
-                    <span className="spec-value">{product.chargingTime || 'N/A'}</span>
-                  </div>
+                  
                   <div className="spec-item">
                     <span className="spec-label">Wheel</span>
                     <span className="spec-value">{product.wheelSize || 'N/A'}</span>

@@ -1,4 +1,4 @@
-/* =========================================================
+/* ========================================================= 
    GLOBAL PRINT SETTINGS
 ========================================================= */
 @page {
@@ -17,8 +17,8 @@ body {
    PROFESSIONAL EV INVOICE DESIGN
 ====================================================== */
 .print-container {
-  width: 794px;
-  max-width: 794px;
+  width: 210mm;
+  max-width: 297mm;
   background: #ffffff;
   margin: 20px auto;
   border-radius: 8px;
@@ -36,9 +36,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
   color: #1a1a1a;
   background: #ffffff;
-  width: 794px;
-  max-width: 794px;
-  min-height: 1123px;
+  width: 210mm;
+  max-width: 297mm;
+  min-height: 297mm;
   overflow: visible;
   position: relative;
   display: flex;
@@ -139,7 +139,7 @@ body {
 }
 
 .details-card p {
-  font-size: 11px;
+  font-size: 15px;
   color: #334155;
   margin: 3px 0;
   line-height: 1.4;
@@ -225,7 +225,7 @@ body {
 .invoice-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 11px;
+  font-size: 13px;
   border: 1px solid #e2e8f0;
   border-radius: 6px;
   overflow: hidden;
@@ -238,7 +238,7 @@ body {
 
 .invoice-table th {
   padding: 8px 10px;
-  font-size: 10px;
+  font-size: 13px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -257,7 +257,7 @@ body {
   padding: 8px 10px;
   border-bottom: 1px solid #f1f5f9;
   vertical-align: top;
-  font-size: 11px;
+  font-size: 13px;
   color: #334155;
   line-height: 1.3;
 }
@@ -436,9 +436,9 @@ body {
 
 .invoice-footer-text {
   color: #64748b;
-  font-size: 11px;
+  font-size: 13px;
   margin: 4px 0;
-  line-height: 1.4;
+  line-height: 1;
 }
 
 .invoice-footer-text strong {
@@ -452,10 +452,10 @@ body {
 .signature-area {
   display: flex;
   justify-content: flex-end;
-  padding: 16px 32px 24px;
+  padding: 10px 32px 15px;
   background: #ffffff;
-  border-top: 1px solid #e2e8f0;
-  margin-top: auto;
+ 
+  margin-top: 10px;
 }
 
 .signature-box {
@@ -491,23 +491,6 @@ body {
   font-size: 10px;
   color: #64748b;
   margin-top: 4px;
-}
-
-/* ======================================================
-   WATERMARK (Subtle)
-====================================================== */
-.watermark {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) rotate(-30deg);
-  font-size: 100px;
-  font-weight: 900;
-  color: rgba(30, 64, 175, 0.03);
-  pointer-events: none;
-  white-space: nowrap;
-  letter-spacing: 20px;
-  z-index: 0;
 }
 
 /* ======================================================
@@ -570,12 +553,15 @@ body {
   }
 }
 
-/* ======================================================
-   PRINT STYLES
-====================================================== */
+
 @media print {
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+
   body {
-    background: white !important;
+    background: #ffffff !important;
     margin: 0 !important;
     padding: 0 !important;
   }
@@ -587,30 +573,96 @@ body {
   .print-container {
     width: 210mm !important;
     max-width: 210mm !important;
-    margin: 0 !important;
+    height: 297mm !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
     box-shadow: none !important;
     border-radius: 0 !important;
-    page-break-after: avoid !important;
+    overflow: hidden !important;
   }
 
   #bill-preview {
     width: 210mm !important;
     max-width: 210mm !important;
-    min-height: 297mm !important;
+    height: 297mm !important;
+    max-height: 297mm !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
     box-shadow: none !important;
     border-radius: 0 !important;
     page-break-after: avoid !important;
+    page-break-inside: avoid !important;
   }
 
-  @page {
-    size: A4;
-    margin: 0;
+  /* Keep each card/section intact instead of splitting across pages */
+  .details-section,
+  .bike-specs,
+  .invoice-table-wrapper,
+  .total-wrapper,
+  .warranty-box,
+  .invoice-footer,
+  .signature-area {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
   }
 }
 
-/* =========================================================
-   DASHBOARD STATS CARD (Preserved)
-========================================================= */
+
+.pdf-mode {
+  width: 794px !important;
+  max-width: 794px !important;
+  min-height: 1123px !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.pdf-mode .details-grid {
+  grid-template-columns: repeat(2, 1fr) !important;
+}
+
+.pdf-mode .bike-specs-grid {
+  grid-template-columns: repeat(3, 1fr) !important;
+}
+
+.pdf-mode .total-box {
+  width: 280px !important;
+}
+
+.pdf-mode .signature-box {
+  width: 200px !important;
+}
+
+.pdf-mode .invoice-header {
+  padding: 20px 32px !important;
+}
+
+.pdf-mode .details-section,
+.pdf-mode .total-wrapper {
+  padding: 16px 32px !important;
+}
+
+.pdf-mode .bike-specs,
+.pdf-mode .warranty-box {
+  margin: 12px 32px !important;
+}
+
+.pdf-mode .invoice-table-wrapper {
+  padding: 0 32px !important;
+}
+
+.pdf-mode .signature-area {
+  padding: 10px 32px 15px !important;
+}
+
+.pdf-mode .invoice-footer {
+  padding: 10px 32px !important;
+}
+
+/* =======================================
+   DASHBOARD STATS CARD 
+=============================================*/
 .stat-card {
   position: relative;
   overflow: hidden;
@@ -651,9 +703,9 @@ body {
   height: 96px;
 }
 
-/* =========================================================
-   BILL FORM (Preserved)
-========================================================= */
+/* ==========================
+   BILL FORM 
+=============================*/
 .bill-form-section {
   background: white;
   border-radius: 12px;
@@ -690,7 +742,7 @@ body {
 }
 
 /* =========================================================
-   CUSTOMER CARD (Preserved)
+   CUSTOMER CARD
 ========================================================= */
 .customer-card {
   background: linear-gradient(to right, #dbeafe, #f0fdf4);
@@ -700,7 +752,7 @@ body {
 }
 
 /* =========================================================
-   PAYMENT METHOD (Preserved)
+   PAYMENT METHOD (
 ========================================================= */
 .payment-method {
   display: flex;
@@ -832,3 +884,5 @@ body {
   }
 
 }
+
+

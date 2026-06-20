@@ -600,7 +600,7 @@ export default function EditBill() {
                     {/* Vehicle Specifications */}
                     <details className="mt-3">
                       <summary className="cursor-pointer text-sm font-medium text-blue-600 hover:text-blue-700">
-                        ⚙️ Vehicle Specifications (Optional)
+                        ⚙️ Vehicle Specifications
                       </summary>
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-3 pt-3 border-t border-gray-200">
                         <div>
@@ -623,14 +623,8 @@ export default function EditBill() {
                           <label className="block text-xs font-medium text-gray-600 mb-1">Range</label>
                           <input type="text" value={product.range || ''} onChange={(e) => handleProductChange(index, 'range', e.target.value)} placeholder="Range" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm" />
                         </div>
-                        <div>
-                          <label className="block text-xs font-medium text-gray-600 mb-1">Top Speed</label>
-                          <input type="text" value={product.topSpeed || ''} onChange={(e) => handleProductChange(index, 'topSpeed', e.target.value)} placeholder="Top Speed" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm" />
-                        </div>
-                        <div>
-                          <label className="block text-xs font-medium text-gray-600 mb-1">Charging Time</label>
-                          <input type="text" value={product.chargingTime || ''} onChange={(e) => handleProductChange(index, 'chargingTime', e.target.value)} placeholder="Charging Time" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm" />
-                        </div>
+                        
+                        
                         <div>
                           <label className="block text-xs font-medium text-gray-600 mb-1">Wheel Size</label>
                           <input type="text" value={product.wheelSize || ''} onChange={(e) => handleProductChange(index, 'wheelSize', e.target.value)} placeholder="Wheel Size" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm" />
@@ -649,9 +643,9 @@ export default function EditBill() {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                 {[
                   { value: 'cash', label: 'Cash', icon: '💵' },
-                  { value: 'card', label: 'Card', icon: '💳' },
-                  { value: 'upi', label: 'UPI', icon: '📱' },
+                  
                   { value: 'bank_transfer', label: 'Bank Transfer', icon: '🏦' },
+                  { value: 'Finance', label: 'Finance', icon: '💰' },
                 ].map(mode => (
                   <label
                     key={mode.value}

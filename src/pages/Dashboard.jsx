@@ -102,13 +102,20 @@ useEffect(() => {
                 <img
                   src={business.logo}
                   alt="Logo"
-                  className="h-10 w-10 rounded-lg object-contain border border-gray-200"
+                  className="h-16 w-16 rounded-lg object-contain border border-gray-200"
                 />
               )}
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">
-                  {business.businessName}
-                </h1>
+                <h1
+                style={{
+                  fontFamily: "'Orbitron', sans-serif",
+                  fontSize: "32px",
+                  fontWeight: "700",
+                  color: "#044042"
+                }}
+              >
+                {business?.businessName}
+              </h1>
                 <p className="text-sm text-gray-500">{business.tagline}</p>
               </div>
             </div>

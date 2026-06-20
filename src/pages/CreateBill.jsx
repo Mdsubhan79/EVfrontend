@@ -324,21 +324,9 @@ const handleCreateBill = async (e) => {
                 className="border p-3 rounded-lg"
               />
 
-              <input
-                type="text"
-                placeholder="Top Speed"
-                value={topSpeed}
-                onChange={(e) => setTopSpeed(e.target.value)}
-                className="border p-3 rounded-lg"
-              />
+              
 
-              <input
-                type="text"
-                placeholder="Charging Time"
-                value={chargingTime}
-                onChange={(e) => setChargingTime(e.target.value)}
-                className="border p-3 rounded-lg"
-              />
+              
               
 
             <input
@@ -367,8 +355,8 @@ const handleCreateBill = async (e) => {
               className="border p-3 rounded-lg w-full"
             >
               <option value="cash">Cash</option>
-                <option value="card">Card</option>
-                <option value="upi">UPI</option>
+                
+                <option value="Finance">Finance</option>
                 <option value="bank_transfer">Bank Transfer</option>
             </select>
 
